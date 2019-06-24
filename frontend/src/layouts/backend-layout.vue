@@ -30,7 +30,7 @@ import '@/assets/js/jquery.nicescroll.js';
 import '@/assets/js/pikeadmin.js';
 
 export default {
-  name: 'Backend',
+  //name: 'Backend',
   components: {
 	Header, Footer, Sidebar
   }

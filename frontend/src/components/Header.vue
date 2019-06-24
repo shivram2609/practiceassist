@@ -8,12 +8,10 @@
                    </button>
                      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
                          <ul class="navbar-nav justify-content-end">
+							
 							<li class="nav-item">
-								<a class="nav-link" href="#">Product </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link solution" href="#">Solutions </a>
-							</li>
+								<router-link to="/" class="nav-link">Home</router-link>
+							</li>  
 							<li class="nav-item">
 								<a class="nav-link" href="#">Pricing</a>
 							</li>  
@@ -21,7 +19,7 @@
 								<a class="nav-link" href="#">Testimonials</a>
 							</li> 
 							<li class="nav-item">
-								<a class="nav-link" href="#">Resources</a>
+								<a class="nav-link" href="#">Contact us</a>
 							</li> 
 							<li class="nav-item">
 								<router-link to="login" class="nav-link">Login</router-link>

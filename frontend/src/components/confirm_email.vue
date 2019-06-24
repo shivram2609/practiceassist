@@ -21,7 +21,7 @@
 <script>
 
 export default {
- name: 'ConfirmEmail',
+ //name: 'ConfirmEmail',
  data() {
 	 return {
 		 confirmEmail:'',

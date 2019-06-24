@@ -20,6 +20,16 @@ module.exports= {
 			 },
 			function(err) {console.log(err || "Mail Sent!");}
 		 );
+	},
+	sendUserDetailInEmail: function(obj) {
+		
+		 sails.hooks.email.send("userDetail", {user: obj},
+			 {
+				 to: obj.email,
+				 subject: "Welcome Email"
+			 },
+			function(err) {console.log(err || "Mail Sent!");}
+		 );
 	}
 }
 

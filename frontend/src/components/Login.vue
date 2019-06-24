@@ -103,8 +103,10 @@ export default {
 			if(app.$route.params.nextUrl != null){
 				app.$router.push(this.$route.params.nextUrl)
 			} else {
-				app.$router.push('/account');
-		
+				app.$router.go()
+				app.$router.push('account');
+			
+				
 			}
 		}
 	   }

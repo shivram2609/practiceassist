@@ -130,7 +130,7 @@
             <div class="row">
                 <div class="col-md-12"> 
                     <ul>
-                            <li><a href="#">© 2019 Themis Solutions Inc. </a></li>
+                            <li><a href="#">© 2019 Practice Assistant. </a></li>
                         <li><a href="#">Terms of Service </a></li>
                         <li><a href="#">Privacy Policy </a></li>
                     </ul>
@@ -191,7 +191,7 @@
 </div>
 <script>
 export default {
-  name: 'Home',
+  //name: 'Home',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

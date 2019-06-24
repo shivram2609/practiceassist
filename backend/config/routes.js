@@ -32,7 +32,18 @@ module.exports.routes = {
   'post /api/user/login': 'UserController.login',
   'post /api/user/confirm_email': 'UserController.confirm_email',
   'post /api/user/forgot_password': 'UserController.forgot_password',
-  'post /api/user/change_password': 'UserController.change_password'
+  'post /api/user/change_password': 'UserController.change_password',
+  'post /api/user/userlist': 'UserController.get_users',
+  'post /api/user/edit_user': 'UserController.edit_user',
+  'post /api/user/update_user': 'UserController.update_user',
+  'post /api/user/delete_user': 'UserController.delete_user',
+  'post /api/user/update_password': 'UserController.update_password',
+  'post /api/user/update_status': 'UserController.update_status',
+  
+  
+  'post /api/case/add_case': 'CasesController.create',
+  
+  
 
 
   /***************************************************************************

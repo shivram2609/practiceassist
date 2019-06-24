@@ -5,16 +5,20 @@
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 				   <div class="login-page">
-					   <h3>Change Password</h3>
+					   <h3>Update Password</h3>
 							<div class="login-form">
 								
 								<form class="register-from needs-validation" @submit="resetForm">
+										<div class="form-group">
+										<label for="userPassword">Password</label>
+										<input type="password" :class="{'is-invalid': $v.user.current_password.$error || submitStatus == true}" class="form-control" id="userCurrentPassword" v-model.trim="$v.user.current_password.$model" placeholder="Password ">		
+										<div class="invalid-feedback text-left" v-if="!$v.user.current_password.required">Please enter current password.</div>
+										
+									</div>
 									
 									<div class="form-group">
-									
 										<label for="userPassword">Password</label>
-										<input type="password" :class="{'is-invalid': $v.user.password.$error || submitStatus == true}" class="form-control" id="userPassword" v-model.trim="$v.user.password.$model" placeholder="Password ">
-										
+										<input type="password" :class="{'is-invalid': $v.user.password.$error || submitStatus == true}" class="form-control" id="userPassword" v-model.trim="$v.user.password.$model" placeholder="Password ">		
 										<div class="invalid-feedback text-left" v-if="!$v.user.password.required">Please enter password.</div>
 										<div class="invalid-feedback text-left" v-if="!$v.user.password.minLength">Password must have at least {{ $v.user.password.$params.minLength.min }} characters.</div>
 										<div class="invalid-feedback text-left" v-if="!$v.user.password.maxLength">Password must have at max {{ $v.user.password.$params.maxLength.max }} characters.</div>
@@ -33,10 +37,6 @@
 									<div class="form-group">
 										<button class="btn btn-primary" type="submit">Update</button>
 									</div>
-									<div class="no-account">
-										<h4><router-link to="login"><span>Login</span></router-link></h4>
-									</div>
-									
 								</form>
 				           </div>
                </div>
@@ -54,9 +54,10 @@ export default {
  data() {
 	 return {
 		  user: {
+				current_password: '',
 				password: '',
 				confirmPassword: '',
-				token_code:''
+				user_token:''
 			   },
 			   submitStatus: false,
 		}
@@ -65,6 +66,9 @@ export default {
  //Validations
 	 validations: {
 	  user: {
+	   current_password: {
+		required
+	   },
 	   password: {
 		required,
 	    minLength: minLength(6),
@@ -89,10 +93,9 @@ export default {
 				app.submitStatus = true
 				return;
 			   }
-			   
-			   app.user.token_code = app.$route.query.reset_token;
-			
-		   app.axios.post('api/user/change_password', app.user)
+			var getCode = localStorage.getItem('jwt');
+			app.user.user_token = getCode;
+		   app.axios.post('api/user/update_password', app.user)
 				   .then(function(resp){
 					   if(resp.data.status === true) {
 						   app.user = { password:'', confirmPassword:''}

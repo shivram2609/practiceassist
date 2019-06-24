@@ -11,9 +11,9 @@
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <small>Hello, Ramnish  </small>  <img src="../../assets/img/twenty-fur-hour.png" alt="Profile image" class="avatar-rounded">
                             </a>
-                             
+                            <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> <span @click="logout" >Logout</span></a>   
                         </li>
-                        <li class="text-right"><span @click="logout" style="cursor:pointer;">Logout</span></li>
+                    
                     </ul>
                     <ul class="list-inline menu-left mb-0">
                         <li class="float-left">

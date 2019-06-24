@@ -9,10 +9,10 @@ var Promise = require("bluebird");
 module.exports = {
 
   attributes: {
-	company_id: { type: 'number', defaultsTo: 0 },
+	
 	name: { type: 'string', minLength: 5, maxLength: 50, required: true },
 	email: { type: 'string', minLength: 5, maxLength: 50, required: true, isEmail: true, unique: true},
-	password: { type: 'string', minLength: 6, maxLength: 20, required: true },
+	password: { type: 'string', minLength: 6, maxLength: 20, required: false },
 	address: { type: 'string', allowNull: true},
 	type: { type: 'number', defaultsTo: 2 },
 	phone: { type: 'string', minLength: 10, maxLength: 10, allowNull: true, },
@@ -21,7 +21,10 @@ module.exports = {
 	is_archived: { type: 'boolean', defaultsTo: false},
 	is_email_confirmed: { type: 'boolean', defaultsTo: false},
 	confirmation_token: { type: 'string', allowNull: true},
-	reset_token: { type: 'string', allowNull: true}
+	reset_token: { type: 'string', allowNull: true},
+	price: { type: 'number', columnType: 'float', allowNull: true},
+	company_code: { type: 'string', allowNull: true},
+	company_id: {  model: 'companies'  }
     
   },
 
@@ -32,7 +35,6 @@ module.exports = {
       cb();
     });
   },
-  
   comparePassword: function(password, users) {
 	return new Promise(function (resolve, reject) {
       bcrypt.compare(password, users.password, function (err, match) {
@@ -45,7 +47,19 @@ module.exports = {
         }
       })
     });
-  }
+  },
+  beforeUpdate: function (values, cb) {
+	  if(values.password) {
+		bcrypt.hash(values.password, 10, function (err, hash) {
+		  if (err) return cb(err);
+		  values.password = hash;
+		  cb();
+		});
+	}else {
+		cb();
+	}
+    
+    }
 
 };
 

@@ -25,6 +25,13 @@ module.exports.policies = {
     'forgot_password': true,
     'change_password': true,
     'confirm_email':true,
+    'get_users':true,
+    'edit_user':true,
+    'update_user':true,
+    'delete_user':true,
+    'update_password':true,
+    'update_status':true,
+    
     
   }
 };
