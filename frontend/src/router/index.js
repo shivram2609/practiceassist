@@ -19,7 +19,7 @@ import EditClients from '@/components/account/edit_client'
 import UpdatePassword from '@/components/account/update_password'
 //cases
 import AddCase from '@/components/case/add_case'
-
+import Cases from '@/components/case/all_cases'
 
 Vue.use(Router)
 
@@ -45,7 +45,7 @@ var router=  new Router({
 	
 	
 	{ path: '/add_case', 			name: 'addcase', 		component: AddCase, 		meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
-	
+	{ path: '/all_cases', 			name: 'cases', 			component: Cases, 			meta: { 	requiresAuth: 	true,	layout: "backend"	}},
 	
 		]
 });

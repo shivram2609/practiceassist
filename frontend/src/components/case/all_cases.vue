@@ -4,27 +4,26 @@
         <div class="col-md-11">
             <div class="card">
 					<div class="card-header">
-						<router-link to="add_lawyer" class="btn btn-primary">Add Lawyer</router-link>
 					</div>
 					<div class="card-body">
 						 <table class="Marchant-table table table-bordered " width="100%">
 					  <tr>		
 						<th>S.no</th>
-						<th>Name</th>
-						<th>Email</th>
+						<th>Case Name</th>
+						<th>Description</th>
 						<th>Date</th>
 						
 						<th colspan="3"> ACTION </th>
 					  </tr>	
 
-					  <tr v-for="user, index in userList">
-						<td>{{user.id}}</td>
-						<td>{{user.name}}</td>
-						<td>{{user.email}}</td>
-						<td><router-link :to="{path:'edit_lawyer',query:{id:user.id}}">Edit</router-link></td>
-						<td><span style="cursor:pointer;" @click="deleteUser(user.id , index)">Delete</span> | 
-						<span v-if="user.status == true" style="cursor:pointer;" @click="updateStatus(user.id , index)">De-actived</span>
-						<span v-else style="cursor:pointer;" @click="updateStatus(user.id , index)">Active</span></td>
+					  <tr v-for="cases, index in caseList">
+						<td>{{cases.id}}</td>
+						<td>{{cases.title}}</td>
+						<td>{{cases.description}}</td>
+						<td><router-link :to="{path:'edit_lawyer',query:{id:cases.id}}">Edit</router-link></td>
+						<td><span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span> | 
+						<span v-if="cases.status == true" style="cursor:pointer;" @click="updateStatus(cases.id , index)">De-actived</span>
+						<span v-else style="cursor:pointer;" @click="updateStatus(cases.id , index)">Active</span></td>
 					</tr>
 			
 				
@@ -44,7 +43,7 @@ export default {
 		return {
 	
 			company_code: {},
-			userList: {},
+			caseList: {},
 			deleteId: {}
 		}
 	},
@@ -70,11 +69,9 @@ export default {
 		},
 		getAllLawyers(data) {
 			var app = this;
-			var getCode = JSON.parse(localStorage.getItem('user'));
-			app.company_code = {cCode : getCode.company_code, type: 2};
-			app.axios.post('/api/user/userlist',app.company_code)
+			app.axios.get('/api/case/caselist')
 				.then(function (resp) {
-					app.userList = resp.data.response;
+					app.caseList = resp.data.response;
 				}).catch(function (resp) {
 				});
 			

@@ -42,6 +42,7 @@ module.exports.routes = {
   
   
   'post /api/case/add_case': 'CasesController.create',
+  'get /api/case/caselist': 'CasesController.get_cases',
   
   
 
