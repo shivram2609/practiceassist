@@ -16,7 +16,6 @@ module.exports.policies = {
   * (`true` allows public access)                                            *
   *                                                                          *
   ***************************************************************************/
-
   '*': ['isAuthorized'],
   
   'UserController': {
@@ -35,6 +34,9 @@ module.exports.policies = {
   'CasesController': {
 	  'create':true,
 	  'get_cases':true,
+	  'delete_case':true,
+	  'edit_case':true,
+	  'update_case':true,
 	  
 	  }
 };

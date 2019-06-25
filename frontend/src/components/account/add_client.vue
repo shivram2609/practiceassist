@@ -4,7 +4,7 @@
         <div class="col-md-11">
             <div class="card">
 					<div class="card-header">
-						<router-link to="all_clients" class="btn btn-primary">View Clients</router-link>
+		
 					</div>
 					<div class="card-body">
 						<form  class="register-from needs-validation" novalidate @submit="addClient">

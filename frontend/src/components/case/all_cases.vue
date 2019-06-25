@@ -11,21 +11,22 @@
 						<th>S.no</th>
 						<th>Case Name</th>
 						<th>Description</th>
-						<th>Date</th>
-						
 						<th colspan="3"> ACTION </th>
 					  </tr>	
-
-					  <tr v-for="cases, index in caseList">
+		
+					 <template v-if="notFound">
+						<tr><td colspan="4" style="text-align:center">{{notFound}}</td></tr>
+					</template>
+					<template v-else>
+						 <tr v-for="cases, index in caseList">
 						<td>{{cases.id}}</td>
 						<td>{{cases.title}}</td>
 						<td>{{cases.description}}</td>
-						<td><router-link :to="{path:'edit_lawyer',query:{id:cases.id}}">Edit</router-link></td>
-						<td><span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span> | 
-						<span v-if="cases.status == true" style="cursor:pointer;" @click="updateStatus(cases.id , index)">De-actived</span>
-						<span v-else style="cursor:pointer;" @click="updateStatus(cases.id , index)">Active</span></td>
+						<td><router-link :to="{path:'edit_case',query:{id:cases.id}}">Edit</router-link> |
+						 <span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span>
+						</td>
 					</tr>
-			
+					</template>
 				
 					</table>
 					</div>
@@ -44,19 +45,20 @@ export default {
 	
 			company_code: {},
 			caseList: {},
-			deleteId: {}
+			deleteId: {},
+			notFound: ''
 		}
 	},
 	created(){
 				this.getAllLawyers();
 			},
 	methods: {
-		deleteUser: function(e) {
+		deleteCase: function(e) {
 				event.preventDefault();
 				var app = this;
 				app.deleteId = {did : e }
 				if(confirm("Do you really want to delete?")) {
-				app.axios.post('/api/user/delete_user',app.deleteId)
+				app.axios.post('/api/case/delete_case',app.deleteId)
 				.then(function (resp) {
 					app.getAllLawyers();
 					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
@@ -71,7 +73,13 @@ export default {
 			var app = this;
 			app.axios.get('/api/case/caselist')
 				.then(function (resp) {
-					app.caseList = resp.data.response;
+				
+					if(resp.data.status == true) {
+						app.caseList = resp.data.response;
+						}else {
+						app.notFound = resp.data.messages.join();
+					}
+					
 				}).catch(function (resp) {
 				});
 			

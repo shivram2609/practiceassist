@@ -3,9 +3,7 @@
 				
         <div class="col-md-11">
             <div class="card">
-					<div class="card-header">
-						<router-link to="all_lawyers" class="btn btn-primary">View Lawyers</router-link>
-					</div>
+			
 					<div class="card-body">
 						<form  class="register-from needs-validation" novalidate @submit="addLawyer">
 				
@@ -57,7 +55,8 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Register</button>
+							<button class="btn btn-primary" type="submit">Register</button>
+						
                             </div>
                         </div>
                     </form>

@@ -48,12 +48,12 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Select Lawyer</label>
 
                             <div class="col-md-6">
-                                 <select class="form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
+                                 <select multiple class="form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
 								  <option disabled value="">Please select one</option>
 								 <option value="1">1</option>
-								  <option value="2">2</option>
-								  <option value="3">3</option>
-								  <option value="4">4</option>
+								 <option value="2">2</option>
+								 <option value="3">3</option>
+								 <option value="4">4</option>
 								</select>
 								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter lawyer One or Multiple.</div>
                             </div>
@@ -62,7 +62,9 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">Case Date</label>
 
                             <div class="col-md-6">
-                                <input  type="text" name="date" value="" class="form-control" :class="{'is-invalid': $v.user.case_time.$error || submitStatus == true}" v-model="$v.user.case_time.$model">
+							
+									<vue-datetime-picker class="vue-picker1" name="picker1"  v-model="result1">  </vue-datetime-picker>
+																	
                                  <div class="invalid-feedback text-left">Please enter case description.</div>
                             </div>
                         </div>
@@ -82,19 +84,25 @@
   
 </template>
 <script>
+	
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
+
 export default {
+components: {
+    "vue-datetime-picker": require("vue-datetime-picker")
+  },
 	data() {
 		return {
 			user: {
 				title: '',
 				description:'',
 				client_id:'',
-				lawyer_id:'',
+				lawyer_id:[],
 				case_time:'',
 				},
-				submitStatus: false
+				submitStatus: false,
+				result1: null
 		}
 	},
 	
@@ -142,14 +150,10 @@ export default {
 			}
 			
 			if(!app.$v.$invalid) {
-				
-				
 				app.axios.post('/api/case/add_case',app.user)
 				.then(function (resp) {
-					
 					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					
-					
+					app.$router.push('all_cases');
 				}).catch(function (resp) {
 					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
 				});
@@ -157,6 +161,7 @@ export default {
 			}
 			
 		}
+		
 		
 		}
 	

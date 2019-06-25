@@ -281,7 +281,12 @@ module.exports = {
 		var getCode = req.param('cCode');
 		var type = req.param('type');
 		var UsersList = await Users.find({company_code: getCode}).where({ 'type': type});
-		return res.json({ status: true, response: UsersList , messages:[getCode] });
+			if(UsersList.length > 0	) 
+			{
+				return res.json({ status: true, response: UsersList , messages:[] });
+			}else {
+				return res.json({ status: false, response: UsersList , messages:['No records found!'] });
+			}
 		
 	},
 	

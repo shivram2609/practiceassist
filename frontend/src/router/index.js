@@ -20,6 +20,7 @@ import UpdatePassword from '@/components/account/update_password'
 //cases
 import AddCase from '@/components/case/add_case'
 import Cases from '@/components/case/all_cases'
+import EditCase from '@/components/case/edit_case'
 
 Vue.use(Router)
 
@@ -27,27 +28,26 @@ var router=  new Router({
   mode: 'history',
   routes: [
   
-	{ path: '/',					name: 'home', 			component: Home, 			meta: {  	guest: 			false, 	layout: "frontend" 	}},
-	{ path: '/login', 				name: 'login', 			component: Login, 			meta: { 	guest: 			true, 	layout: "frontend"	}},
-	{ path: '/register',			name: 'register', 		component: Register, 		meta: { 	guest: 			true, 	layout: "frontend"	}},
-	{ path: '/confirm_email', 		name: 'confirmemail', 	component: ConfirmEmail, 	meta: { 	guest: 			true, 	layout: "frontend" 	}},
-	{ path: '/forgot_password', 	name: 'forgotpassword', component: ForgotPassword, 	meta: { 	guest: 			true, 	layout: "frontend" 	}},
-	{ path: '/change_password', 	name: 'changepassword', component: ChangePassword,	meta: { 	guest: 			true,	layout: "frontend"	}},
-	{ path: '/account', 			name: 'account', 		component: Account, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-	{ path: '/all_lawyers', 		name: 'lawyers', 		component: Lawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-	{ path: '/add_lawyer', 			name: 'addlawyer', 		component: AddLawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-	{ path: '/edit_lawyer', 		name: 'editlawyer', 	component: EditLawyers,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
-	{ path: '/all_clients', 		name: 'clients', 		component: Clients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
-	{ path: '/add_client', 			name: 'addclient', 		component: AddClients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
-	{ path: '/edit_client', 		name: 'editclient', 	component: EditClients, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
-	
-	{ path: '/update_password', 	name: 'updatepassword', component: UpdatePassword, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
-	
-	
-	{ path: '/add_case', 			name: 'addcase', 		component: AddCase, 		meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
-	{ path: '/all_cases', 			name: 'cases', 			component: Cases, 			meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-	
-		]
+		{ path: '/',					name: 'home', 			component: Home, 			meta: {  	guest: 			false, 	layout: "frontend" 	}},
+		{ path: '/login', 				name: 'login', 			component: Login, 			meta: { 	guest: 			true, 	layout: "frontend"	}},
+		{ path: '/register',			name: 'register', 		component: Register, 		meta: { 	guest: 			true, 	layout: "frontend"	}},
+		{ path: '/confirm_email', 		name: 'confirmemail', 	component: ConfirmEmail, 	meta: { 	guest: 			true, 	layout: "frontend" 	}},
+		{ path: '/forgot_password', 	name: 'forgotpassword', component: ForgotPassword, 	meta: { 	guest: 			true, 	layout: "frontend" 	}},
+		{ path: '/change_password', 	name: 'changepassword', component: ChangePassword,	meta: { 	guest: 			true,	layout: "frontend"	}},
+		{ path: '/account', 			name: 'account', 		component: Account, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/all_lawyers', 		name: 'lawyers', 		component: Lawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/add_lawyer', 			name: 'addlawyer', 		component: AddLawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/edit_lawyer', 		name: 'editlawyer', 	component: EditLawyers,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/all_clients', 		name: 'clients', 		component: Clients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/add_client', 			name: 'addclient', 		component: AddClients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/edit_client', 		name: 'editclient', 	component: EditClients, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		
+		{ path: '/update_password', 	name: 'updatepassword', component: UpdatePassword, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		
+		{ path: '/add_case', 			name: 'addcase', 		component: AddCase, 		meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		{ path: '/all_cases', 			name: 'cases', 			component: Cases, 			meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/edit_case', 			name: 'editcase', 		component: EditCase,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
+	]
 });
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {

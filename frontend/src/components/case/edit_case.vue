@@ -4,47 +4,72 @@
         <div class="col-md-11">
             <div class="card">
 					<div class="card-header">
-						<router-link to="all_lawyers" class="btn btn-primary">View Lawyers</router-link>
+						<h3>Edit Case</h3>
 					</div>
 					<div class="card-body">
-						<form  class="register-from needs-validation" novalidate @submit="updateLawyer">
+						<form  class="register-from needs-validation" novalidate @submit="updateCase">
 				
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" v-model="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error}" class="form-control" name="name" value="">
-                                <div  class="invalid-feedback text-left" v-if="!$v.user.name.required">Please enter user name.</div>
-                                <div class="invalid-feedback text-left" v-if="!$v.user.name.minLength">Name must have at least {{ $v.user.name.$params.minLength.min }} characters.</div>
-								<div class="invalid-feedback text-left" v-if="!$v.user.name.maxLength">Name must have at max {{ $v.user.name.$params.maxLength.max }} characters.</div>
+                                <input id="name" type="text"  :class="{'is-invalid': $v.user.title.$error || submitStatus == true}" v-model="$v.user.title.$model" class="form-control" name="title">
+                                <div  class="invalid-feedback text-left" v-if="!$v.user.title.required">Please enter case title.</div>
+                                <div class="invalid-feedback text-left" v-if="!$v.user.title.minLength">Name must have at least {{ $v.user.title.$params.minLength.min }} characters.</div>
+								<div class="invalid-feedback text-left" v-if="!$v.user.title.maxLength">Name must have at max {{ $v.user.title.$params.maxLength.max }} characters.</div>
+                               
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Description</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" readOnly :class="{'is-invalid': $v.user.email.$error}" v-model="$v.user.email.$model" class="form-control" name="email" value="">
-                                 <div class="invalid-feedback text-left" v-if="!$v.user.email.required">Please enter email.</div>
-								<div class="invalid-feedback text-left" v-if="!$v.user.email.email">Please enter valid email.</div>
-								<div class="invalid-feedback text-left" v-if="!$v.user.email.minLength">Email must have at least {{ $v.user.email.$params.minLength.min }} characters.</div>
-								<div class="invalid-feedback text-left" v-if="!$v.user.email.maxLength">Email must have at max {{ $v.user.email.$params.maxLength.max }} characters.</div>
+                                <textarea class="form-control" :class="{'is-invalid': $v.user.description.$error || submitStatus == true}" v-model="$v.user.description.$model"  placeholder="add multiple lines"></textarea>
+                                 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter description.</div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Select Client</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" :class="{'is-invalid': $v.user.password.$error	}" v-model="$v.user.password.$model" class="form-control" name="password">
-                               <div class="invalid-feedback text-left" v-if="!$v.user.password.required">Please enter password.</div>
-								<div class="invalid-feedback text-left" v-if="!$v.user.password.minLength">Password must have at least {{ $v.user.password.$params.minLength.min }} characters.</div>
-								<div class="invalid-feedback text-left" v-if="!$v.user.password.maxLength">Password must have at max {{ $v.user.password.$params.maxLength.max }} characters.</div>
+                            <div class="col-md-6" >
+                                <select class="form-control" :class="{'is-invalid': $v.user.client_id.$error || submitStatus == true}" v-model="$v.user.client_id.$model">
+								  <option disabled value="">Please select one</option>
+								  <option value="1">1</option>
+								  <option value="2">2</option>
+								  <option value="3">3</option>
+								  <option value="4">4</option>
+								</select>
+								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter client.</div>
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Select Lawyer</label>
+
+                            <div class="col-md-6">
+                                 <select multiple class="form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
+								  <option disabled value="">Please select one</option>
+								 <option value="1">1</option>
+								 <option value="2">2</option>
+								 <option value="3">3</option>
+								 <option value="4">4</option>
+								</select>
+								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter lawyer One or Multiple.</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Case Date</label>
+
+                            <div class="col-md-6">
+                                <input  type="text" name="date" value="" class="form-control" :class="{'is-invalid': $v.user.case_time.$error || submitStatus == true}" v-model="$v.user.case_time.$model">
+                                 <div class="invalid-feedback text-left">Please enter case description.</div>
+                            </div>
+                        </div>
+                        
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Register</button>
+						<button class="btn btn-primary" type="submit">Update Case</button>
                             </div>
                         </div>
                     </form>
@@ -57,73 +82,78 @@
   
 </template>
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
 	data() {
 		return {
 			user: {
-				name:'',
-				email:'',
-				password:'',
-				uid:''
-				
+				title: '',
+				description:'',
+				client_id:'',
+				lawyer_id:[],
+				case_time:'',
 				},
-				userId:''
+				submitStatus: false
 		}
 	},
 	
 	//Validations
 	 validations: {
 	  user: {
-	   name: {
+	   title: {
 	    required,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   email: {
-	    required,
-	    email,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   password: {
 	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   }
+	    maxLength: maxLength(50)
+
+	  },
+	  description: {
+	    required,
+	    minLength: minLength(6),
+	    maxLength: maxLength(50)
+
+	  },
+	  client_id: {
+	    required
+
+	  },
+	  lawyer_id: {
+	    required
+
+	  },
+	  case_time: {
+	    required
+
 	  }
+	}
 
 	 },
-	mounted(){
+	 
+	 mounted(){
 		var app = this;
 			app.userId = {uid: this.$route.query.id }
 			
-			app.axios.post('/api/user/edit_user',app.userId)
+			app.axios.post('/api/case/edit_case',app.userId)
 				.then(function (resp) {
-
 					app.user = resp.data.response;
-					app.user.password = '';
-										
 				}).catch(function (resp) {
 					console.log(resp);
 				});
 		
 	},
+	
 	methods: {
-		updateLawyer: function(e){
+		updateCase: function(e){
 		   event.preventDefault();
 		
 			var app = this;
-			
+		
 			if(!app.$v.$invalid) {
-			
 				
-			
-				app.axios.post('/api/user/update_user',app.user)
+				app.axios.post('/api/case/update_case',app.user)
 				.then(function (resp) {
-					
 					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					app.$router.push('all_lawyers'); 
+					app.$router.push('all_cases'); 
 				}).catch(function (resp) {
 					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
 				});

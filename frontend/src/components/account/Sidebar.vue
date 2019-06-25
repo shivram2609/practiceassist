@@ -10,6 +10,7 @@
 						<a href="javascript:void(0)"><i class="fa fa-fw fa-table"></i> <span>Lawyers</span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled" style="">
 								<li><router-link to="all_lawyers">All Lawyers</router-link></li>
+								<li><router-link to="add_lawyer">Add Lawyer</router-link></li>
 								
 							</ul>
 					</li>
@@ -17,6 +18,7 @@
 						<a class="" href="#"><i class="fa fa-fw fa-table"></i> <span>Clients</span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled" style="">
 								<li><router-link to="all_clients">All Clients</router-link></li>
+								<li><router-link to="add_client">Add Client</router-link></li>
 							</ul>
 					</li>
 					<li class="submenu">

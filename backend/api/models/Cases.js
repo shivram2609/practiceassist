@@ -9,9 +9,8 @@ module.exports = {
 
   attributes: {
 	  
-			lawyer_id: { type: 'boolean', required: true },
-			client_id: { type: 'boolean', required: true },
-			company_id: { type: 'boolean', required: false},
+			client_id: { type: 'number', columnType: 'integer', required: true },
+			company_id: { type: 'number', columnType: 'integer', required: false},
 			title: { type: 'string', minLength: 6, maxLength: 50, required: true },
 			description: { type: 'string', required: true},
 			price: { type: 'number', columnType: 'float', required: false},

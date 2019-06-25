@@ -28,6 +28,7 @@ module.exports.routes = {
    * 	/user/resendforgotpassword
    * 
    */
+  
   'post /api/user/register': 'UserController.create',
   'post /api/user/login': 'UserController.login',
   'post /api/user/confirm_email': 'UserController.confirm_email',
@@ -43,6 +44,9 @@ module.exports.routes = {
   
   'post /api/case/add_case': 'CasesController.create',
   'get /api/case/caselist': 'CasesController.get_cases',
+  'post /api/case/delete_case': 'CasesController.delete_case',
+  'post /api/case/edit_case': 'CasesController.edit_case',
+  'post /api/case/update_case': 'CasesController.update_case',
   
   
 

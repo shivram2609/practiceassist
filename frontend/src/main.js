@@ -16,6 +16,8 @@ Vue.use(Vuelidate)
 import VueCarousel from 'vue-carousel';
 Vue.use(VueCarousel);
 
+//vue datepicker
+
 Vue.config.productionTip = false
  
 //vue axios

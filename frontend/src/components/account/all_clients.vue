@@ -4,7 +4,6 @@
         <div class="col-md-11">
             <div class="card">
 					<div class="card-header">
-						<router-link to="add_client" class="btn btn-primary">Add Client</router-link>
 					</div>
 					<div class="card-body">
 						 <table class="Marchant-table table table-bordered " width="100%">
@@ -12,22 +11,22 @@
 						<th>S.no</th>
 						<th>Name</th>
 						<th>Email</th>
-						<th>Date</th>
-						
 						<th colspan="3"> ACTION </th>
 					  </tr>	
-
-					  <tr v-for="user, index in userList">
+					<template v-if="notFount">
+						<tr><td colspan="5" style="text-align:center;">{{notFount}}</td> </tr>
+					</template>
+					<template v-else>
+						 <tr v-for="user, index in userList">
 						<td>{{user.id}}</td>
 						<td>{{user.name}}</td>
 						<td>{{user.email}}</td>
 						<td><router-link :to="{path:'edit_client',query:{id:user.id}}">Edit</router-link></td>
 						<td><span style="cursor:pointer;" @click="deleteUser(user.id, index)">Delete</span> | 
-						<span v-if="user.status == true" style="cursor:pointer;" @click="updateStatus(user.id, index)">De-actived</span>
+						<span v-if="user.status == true" style="cursor:pointer;" @click="updateStatus(user.id, index)">Deactived</span>
 						<span v-else style="cursor:pointer;" @click="updateStatus(user.id)">Active</span></td>
 					</tr>
-			
-				
+					</template>
 					</table>
 					</div>
 			</div>
@@ -45,7 +44,8 @@ export default {
 	
 			company_code: {},
 			userList: {},
-			deleteId: {}
+			deleteId: {},
+			notFount: ''
 		}
 	},
 	created(){
@@ -74,7 +74,12 @@ export default {
 			app.company_code = {cCode : getCode.company_code, type: 3};
 			app.axios.post('/api/user/userlist',app.company_code)
 				.then(function (resp) {
-					app.userList = resp.data.response;
+					if(resp.data.status == true) {
+						app.userList = resp.data.response;
+						}else {
+						app.notFount = resp.data.messages.join();
+					}
+					
 				}).catch(function (resp) {
 				});
 			
