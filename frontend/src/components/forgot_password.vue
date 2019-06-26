@@ -39,49 +39,65 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 export default {
  //name: 'ForgotPassword',
  data() {
-	 return {
-		  user: {
-				email: ''
-			   },
-			   submitStatus: false,
-		}
-	},
-	validations: {
-		user: {
-			email: {
-				required, 
-				email,
-				minLength: minLength(5),
-				maxLength: maxLength(50)
-				
-				}
-			
-			}
-		
-		},
-	methods: {
-		forgotForm: function(e) {
-			event.preventDefault();
-			var app = this;
-			
-			if (app.$v.$invalid) {
-			app.submitStatus = true
-			return;
-		   }
-		   
-			app.axios.post('api/user/forgot_password', app.user)
-			   .then(function(resp){
-					 app.$notify({text: resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:2000});
-			   }).catch(function(resp){
-				   app.$notify({text: resp.data.messages.join(),type: 'error' , duration:1000,speed:2000});	
-			   });
+  return {
+   user: {
+    email: ''
+   },
+   submitStatus: false,
+  }
+ },
+ validations: {
+  user: {
+   email: {
+    required,
+    email,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
 
-		}
-	}
-	 
+   }
+
+  }
+
+ },
+ methods: {
+  forgotForm: function(e) {
+   event.preventDefault();
+   var app = this;
+
+   if (app.$v.$invalid) {
+    app.submitStatus = true
+    return;
+   }
+
+   app.axios.post('api/user/forgot_password', app.user)
+    .then(function(resp) {
+     app.$notify({
+      text: resp.data.messages.join(),
+      type: resp.data.status ? 'success' : 'error',
+      duration: 1000,
+      speed: 2000
+     });
+    }).catch(function(resp) {
+     app.$notify({
+      text: resp.data.messages.join(),
+      type: 'error',
+      duration: 1000,
+      speed: 2000
+     });
+    });
+
+  }
+ }
+
 }
 </script>

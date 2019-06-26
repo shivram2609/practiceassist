@@ -44,7 +44,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Register</button>
+						<button class="btn btn-primary" type="submit">Update</button>
 						<router-link class="btn btn-primary" to="all_lawyers">Back</router-link>
                             </div>
                         </div>
@@ -58,83 +58,101 @@
   
 </template>
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 
 export default {
-	data() {
-		return {
-			user: {
-				name:'',
-				email:'',
-				password:'',
-				uid:''
-				
-				},
-				userId:''
-		}
-	},
-	
-	//Validations
-	 validations: {
-	  user: {
-	   name: {
-	    required,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   email: {
-	    required,
-	    email,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   password: {
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   }
-	  }
+ data() {
+  return {
+   user: {
+    name: '',
+    email: '',
+    password: '',
+    uid: ''
 
-	 },
-	mounted(){
-		var app = this;
-			app.userId = {uid: this.$route.query.id }
-			
-			app.axios.post('/api/user/edit_user',app.userId)
-				.then(function (resp) {
+   },
+   userId: ''
+  }
+ },
 
-					app.user = resp.data.response;
-					app.user.password = '';
-										
-				}).catch(function (resp) {
-					console.log(resp);
-				});
-		
-	},
-	methods: {
-		updateLawyer: function(e){
-		   event.preventDefault();
-		
-			var app = this;
-			
-			if(!app.$v.$invalid) {
-			
-				
-			
-				app.axios.post('/api/user/update_user',app.user)
-				.then(function (resp) {
-					
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					app.$router.push('all_lawyers'); 
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-				
-			}
-			
-		}
-		
-		}
-	
+ //Validations
+ validations: {
+  user: {
+   name: {
+    required,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
+   },
+   email: {
+    required,
+    email,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
+   },
+   password: {
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   }
+  }
+
+ },
+ mounted() {
+  var app = this;
+  app.userId = {
+   uid: this.$route.query.id
+  }
+
+  app.axios.post('/api/user/edit_user', app.userId)
+   .then(function(resp) {
+
+    app.user = resp.data.response;
+    app.user.password = '';
+
+   }).catch(function(resp) {
+    console.log(resp);
+   });
+
+ },
+ methods: {
+  updateLawyer: function(e) {
+   event.preventDefault();
+
+   var app = this;
+
+   if (!app.$v.$invalid) {
+
+
+
+    app.axios.post('/api/user/update_user', app.user)
+     .then(function(resp) {
+
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+      app.$router.push('all_lawyers');
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+
+   }
+
+  }
+
+ }
+
 }
 
 </script>

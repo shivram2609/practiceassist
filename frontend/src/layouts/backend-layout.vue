@@ -20,7 +20,7 @@ import Footer from '@/components/account/Footer.vue';
 import Sidebar from '@/components/account/Sidebar.vue';
 
 import '@/assets/css/bootstrap.min.css';
-import '@/assets/css/account/style.css';
+import '@/assets/css/account/styles.css';
 import '@/assets/css/account/font-awesome.min.css';
 import '@/assets/js/jquery-3.3.1.min.js';
 import '@/assets/js/jquery-ui.min.js';

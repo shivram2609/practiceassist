@@ -35,10 +35,9 @@
                             <div class="col-md-6" >
                                 <select class="form-control" :class="{'is-invalid': $v.user.client_id.$error || submitStatus == true}" v-model="$v.user.client_id.$model">
 								  <option disabled value="">Please select one</option>
-								  <option value="1">1</option>
-								  <option value="2">2</option>
-								  <option value="3">3</option>
-								  <option value="4">4</option>
+								 <template v-for="client, index in allClientsLists">
+									  <option  :value="client.id">{{client.name}}</option>
+								  </template>
 								</select>
 								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter client.</div>
                             </div>
@@ -50,10 +49,9 @@
                             <div class="col-md-6">
                                  <select multiple class="form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
 								  <option disabled value="">Please select one</option>
-								 <option value="1">1</option>
-								 <option value="2">2</option>
-								 <option value="3">3</option>
-								 <option value="4">4</option>
+								 <template v-for="lawyer, index in allLawyersLists">
+									  <option  :value="lawyer.id">{{lawyer.name}}</option>
+								  </template>
 								</select>
 								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter lawyer One or Multiple.</div>
                             </div>
@@ -62,14 +60,14 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">Case Date</label>
 
                             <div class="col-md-6">
-                                <input  type="text" name="date" value="" class="form-control" :class="{'is-invalid': $v.user.case_time.$error || submitStatus == true}" v-model="$v.user.case_time.$model">
-                                 <div class="invalid-feedback text-left">Please enter case description.</div>
+                               <date-picker v-model="$v.user.case_time.$model" :config="options"></date-picker>
                             </div>
                         </div>
                         
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Update Case</button>
+						<button class="btn btn-primary" type="submit">Update</button>
+						<router-link class="btn btn-primary" to="all_cases">Back</router-link>
                             </div>
                         </div>
                     </form>
@@ -82,88 +80,155 @@
   
 </template>
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength
+} from 'vuelidate/lib/validators'
+import 'bootstrap/dist/css/bootstrap.css';
 
+import datePicker from 'vue-bootstrap-datetimepicker';
+
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 export default {
-	data() {
-		return {
-			user: {
-				title: '',
-				description:'',
-				client_id:'',
-				lawyer_id:[],
-				case_time:'',
-				},
-				submitStatus: false
-		}
-	},
-	
-	//Validations
-	 validations: {
-	  user: {
-	   title: {
-	    required,
-	    minLength: minLength(6),
-	    maxLength: maxLength(50)
+ components: {
+  datePicker
+ },
+ data() {
+  return {
+   user: {
+    title: '',
+    description: '',
+    client_id: '',
+    lawyer_id: [],
+    case_time: new Date()
+   },
+   options: {
+    format: 'YYYY/MM/DD h:mm:ss',
+    useCurrent: false,
+    showClear: true,
+    showClose: true,
+   },
+   submitStatus: false,
+   allLawyersLists: '',
+   allClientsLists: '',
+  }
+ },
 
-	  },
-	  description: {
-	    required,
-	    minLength: minLength(6),
-	    maxLength: maxLength(50)
+ //Validations
+ validations: {
+  user: {
+   title: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(50)
 
-	  },
-	  client_id: {
-	    required
+   },
+   description: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(50)
 
-	  },
-	  lawyer_id: {
-	    required
+   },
+   client_id: {
+    required
 
-	  },
-	  case_time: {
-	    required
+   },
+   lawyer_id: {
+    required
 
-	  }
-	}
+   },
+   case_time: {
+    required
 
-	 },
-	 
-	 mounted(){
-		var app = this;
-			app.userId = {uid: this.$route.query.id }
-			
-			app.axios.post('/api/case/edit_case',app.userId)
-				.then(function (resp) {
-					app.user = resp.data.response;
-				}).catch(function (resp) {
-					console.log(resp);
-				});
-		
-	},
-	
-	methods: {
-		updateCase: function(e){
-		   event.preventDefault();
-		
-			var app = this;
-		
-			if(!app.$v.$invalid) {
-				
-				app.axios.post('/api/case/update_case',app.user)
-				.then(function (resp) {
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					app.$router.push('all_cases'); 
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-				
-			}
-			
-		}
-		
-		}
-	
+   }
+  }
+
+ },
+
+ mounted() {
+  var app = this;
+  app.userId = {
+   uid: this.$route.query.id
+  }
+
+  app.axios.post('/api/case/edit_case', app.userId)
+   .then(function(resp) {
+    app.user = resp.data.response;
+   }).catch(function(resp) {
+    console.log(resp);
+   });
+
+  app.getAllClients();
+  app.getAllLawyers();
+
+ },
+
+ methods: {
+  updateCase: function(e) {
+   event.preventDefault();
+
+   var app = this;
+
+   if (!app.$v.$invalid) {
+
+    app.axios.post('/api/case/update_case', app.user)
+     .then(function(resp) {
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+      app.$router.push('all_cases');
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+
+   }
+
+  },
+
+  getAllClients: function() {
+
+   var app = this;
+   var getCode = JSON.parse(localStorage.getItem('user'));
+   app.company_code = {
+    cCode: getCode.company_code,
+    type: 3
+   };
+   app.axios.post('/api/user/userlist', app.company_code)
+    .then(function(resp) {
+     if (resp.data.status == true) {
+      app.allClientsLists = resp.data.response;
+     }
+
+    }).catch(function(resp) {});
+  },
+  getAllLawyers: function() {
+
+   var app = this;
+   var getCode = JSON.parse(localStorage.getItem('user'));
+   app.company_code = {
+    cCode: getCode.company_code,
+    type: 2
+   };
+   app.axios.post('/api/user/userlist', app.company_code)
+    .then(function(resp) {
+     if (resp.data.status == true) {
+      app.allLawyersLists = resp.data.response;
+     }
+
+    }).catch(function(resp) {});
+  }
+
+ }
+
 }
 
 </script>

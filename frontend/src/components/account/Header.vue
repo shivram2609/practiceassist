@@ -9,7 +9,7 @@
                     <ul class="list-inline float-right mb-0">
                        <li class="list-inline-item dropdown notif">
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <small>Hello, Ramnish  </small>  <img src="../../assets/img/twenty-fur-hour.png" alt="Profile image" class="avatar-rounded">
+                                <small>Hello {{userName}}  </small>  <img src="../../assets/img/twenty-fur-hour.png" alt="Profile image" class="avatar-rounded">
                             </a>
                             <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> <span @click="logout" >Logout</span></a>   
                         </li>
@@ -28,28 +28,37 @@
 
 <script>
 export default {
-  data () {
-    return {
-		isScrolled: false,
-    }
-  },
-  mounted(){  
-	window.addEventListener('scroll', this.updateScroll);
-  },
-  methods: {
-	  
-    updateScroll() {
-		this.isScrolled = window.scrollY > document.getElementById('top-navbar').clientHeight;
-	},
-	
-	logout:function(){
-			this.$notify({text:"You have been logout successfully.",type: 'success' ,duration:1000,speed:3000});
-		window.localStorage.clear(); 
-		this.$router.push('/login');
-	
-		
-	}
+ data() {
+  return {
+   isScrolled: false,
+   userName: ''
   }
+ },
+ mounted() {
+  var app = this;
+  var getUser = JSON.parse(localStorage.getItem('user'));
+  app.userName = getUser.name;
   
+  window.addEventListener('scroll', this.updateScroll);
+ },
+ methods: {
+  updateScroll() {
+   this.isScrolled = window.scrollY > document.getElementById('top-navbar').clientHeight;
+  },
+
+  logout: function() {
+   this.$notify({
+    text: "You have been logout successfully.",
+    type: 'success',
+    duration: 1000,
+    speed: 3000
+   });
+   window.localStorage.clear();
+   this.$router.push('/login');
+
+
+  }
+ }
+
 }
 </script>

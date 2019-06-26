@@ -30,6 +30,7 @@ module.exports.policies = {
     'delete_user':true,
     'update_password':true,
     'update_status':true,
+    'get_packages':true,
   },
   'CasesController': {
 	  'create':true,
@@ -37,6 +38,7 @@ module.exports.policies = {
 	  'delete_case':true,
 	  'edit_case':true,
 	  'update_case':true,
+	  'archive_case':true,
 	  
 	  }
 };

@@ -50,10 +50,16 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 
 export default {
-	
+
  data() {
   return {
    user: {
@@ -90,35 +96,42 @@ export default {
     return;
    }
    app.axios.post('api/user/login', app.user)
-   .then(function(resp){
+    .then(function(resp) {
+	
+     app.$notify({
+      text: resp.data.messages.join(),
+      type: resp.data.status ? 'success' : 'error',
+      duration: 1000,
+      speed: 2000
+     });
+     if (resp.data.status === true) {
+      localStorage.setItem('user', JSON.stringify(resp.data.response.user))
+      localStorage.setItem('jwt', resp.data.response.token)
+	  app.$router.go()
+      if (localStorage.getItem('jwt') != null) {
+       app.$emit('loggedIn');
 
-	   app.$notify({text: resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:2000});	
-	   if(resp.data.status === true) {
-		localStorage.setItem('user',JSON.stringify(resp.data.response.user))
-		localStorage.setItem('jwt',resp.data.response.token)
+       if (app.$route.params.nextUrl != null) {
+        app.$router.push(this.$route.params.nextUrl)
+       } else {
+        app.$router.push('account');
+       }
+      }
+     }
+     // app.$router.push("/account");
+    }).catch(function(resp) {
+     // app.$notify({text: resp.message,type:'error',duration:1000,speed:2000});
+     app.$notify({
+      text: resp.data.messages.join(),
+      type: 'error',
+      duration: 1000,
+      speed: 2000
+     });
+    });
 
-		if (localStorage.getItem('jwt') != null){
-			app.$emit('loggedIn');
-			
-			if(app.$route.params.nextUrl != null){
-				app.$router.push(this.$route.params.nextUrl)
-			} else {
-				app.$router.go()
-				app.$router.push('account');
-			
-				
-			}
-		}
-	   }
-	  // app.$router.push("/account");
-   }).catch(function(resp){
-	  // app.$notify({text: resp.message,type:'error',duration:1000,speed:2000});
-	   app.$notify({text: resp.data.messages.join(),type: 'error' , duration:1000,speed:2000});	
-   });
 
-   
   },
-  
+
  }
 
 

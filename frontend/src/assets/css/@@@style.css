@@ -863,9 +863,6 @@ margin: 0 46px 0 19px;
     .login-form {
         margin: 0px;
     }
-	.trial-version, .premium, .popular {
-    margin: 0 0px 34px 0 !important;
-}
   }
   @media only screen and (max-width: 768px) {
     .banner {
@@ -889,18 +886,6 @@ margin: 0 46px 0 19px;
         font-size: 42px;
         padding: 22px 0 0 0;
     }
-	  div#collapsibleNavbar ul.navbar-nav li.nav-item {
-    padding-bottom: 0px;
-}
-	  header ul.navbar-nav li.nav-item a.nav-link {
-    font-size: 28px;
-    padding: 0 0px 0 2px;
-    margin-top: 6px;
-}
-	  .price-plan h2 {
-    font-size: 28px !important;
-    margin: 0 0 30px 0;
-}
   }
   @media only screen and (max-width: 600px) {
     .radio {
@@ -949,41 +934,6 @@ margin: 0 46px 0 19px;
     .legeal-software h3 {
         font-size: 34px;
     }
-	  .login-page h3 {
-    font-size: 50px;
-}
-	  .login-form button.btn.btn-primary {
-    padding: 4px 34px;
-    font-size: 20px;
-    margin: 18px 0 0 0;
-}
-	  .login-form .no-account h4 {
-    font-size: 20px;
-    font-weight: 600;
-}
-	  .login-form .no-account span {
-    font-size: 22px;
-}
-	  .register-form button.btn.btn-primary {
-    padding: 4px 34px;
-    font-size: 20px;
-    margin: 18px 0 0 0;
-}
-	  .register-form .no-account h4 {
-    font-size: 20px;
-    font-weight: 600;
-}
-	  .register-form .no-account span {
-    font-size: 22px;
-}
-	  .register-form {
-    padding: 34px 30px 30px 30px;
-    margin: 0 0px 0 0px;
-}
-	  .register-firm h3 {
-    text-align: center;
-    font-size: 44px;
-}
   }
   @media only screen and (max-width: 450px) {
     .get-started button.btn.btn-primary {
@@ -1057,10 +1007,6 @@ margin: 0 46px 0 19px;
         padding: 6px 40px;
         font-size: 20px;
     }
-	  header ul.navbar-nav li.nav-item a.nav-link {
-    font-size: 21px;
-    margin-top: 6px;
-}
   }
   @media only screen and (max-width: 411px) {
     .studio-side-img img {
@@ -1080,17 +1026,6 @@ margin: 0 46px 0 19px;
         margin-top: 6em;
         min-height: 478px;
     }
-	  .login-form .no-account h4 {
-    font-size: 16px;
-    font-weight: 600;
-}
-	  .login-form .no-account a {
-    font-size: 18px;
-    color: #0b5f93;
-    font-weight: 600;
-}
-
-
   }
   @media only screen and (max-width: 360px) {
     .navbar img#logo_custom {
@@ -1121,89 +1056,4 @@ margin: 0 46px 0 19px;
     .legeal-software p {
         font-size: 18px;
     }
-	  .layer-firms-changes .radio-btn {
-    display: inline-flex;
-    margin-left: 10px !important;
-}
-	 .layer-firms-changes .checkround {
-    position: absolute !important;
-    top: 5px !important;
-    left: -8px !important;
-    height: 20px !important;
-    width: 22px !important;
-}
   }
-@media only screen and (max-width: 320px) {
-	.layer-firms-changes .radio-btn {
-    display: inline-flex;
-    margin-left: 2px !important;
-}
-	.layer-firms-changes .checkround {
-    position: absolute !important;
-    top: 1px !important;
-    left: -8px !important;
-    height: 20px !important;
-    width: 22px !important;
-}
-	.layer-firms-changes .radio {
-    padding-left: 18px !important;
-    margin-bottom: 12px;
-    font-size: 14px !important;
-}
-}
-/****pricing-sec****/
-.pricing-sec {
-        margin: 9em 0 6em 0;
-}
-.price-plan {
-    text-align: center;
-}
-.price-plan h2 {
-    font-size: 52px;
-    margin: 0 0 30px 0;
-}
-.trial-version, .premium, .popular {
-    text-align: center;
-    border: 1px solid #000;
-	    height: 400px;
-	    margin: 0 14px 0 14px;
-	-webkit-box-shadow: 4px 9px 26px 6px rgba(123,123,123,0.75);
--moz-box-shadow: 4px 9px 26px 6px rgba(123,123,123,0.75);
-box-shadow: 4px 9px 26px 6px rgba(123,123,123,0.75);
-}
-.trial-version ul li, .premium ul li, .popular ul li {
-    padding: 15px 0 15px 0;
-}
-.trial-version ul .check-trial a, .premium ul .check-premiumn a, .popular ul .check-popular a{
-	font-size: 25px;
-	color: #000;
-	font-weight: 600;
-}
-.trial-version ul li:nth-of-type(2), .premium ul li:nth-of-type(2), .popular ul li:nth-of-type(2){
-	background-color: #4399d4;
-	padding: 10px 0;
-}
-.trial-version ul li:nth-of-type(2) a, .premium ul li:nth-of-type(2) a, .popular ul li:nth-of-type(2) a {
-	color: #fff;
-    font-size: 28px;
-    font-weight: bold;
-}
-.trial-version ul li a, .premium ul li a, .popular ul li a{
-    color: #919597;
-    font-size: 21px;
-}
-.trial-version ul li:nth-of-type(3), .premium ul li:nth-of-type(3), .popular ul li:nth-of-type(3){
-	border-bottom: 2px solid #919597;
-}
-.trial-version ul li:nth-of-type(4), .premium ul li:nth-of-type(4), .popular ul li:nth-of-type(4){
-	border-bottom: 2px solid #919597;
-}
-.trial-btn .btn.btn-primary {
-    margin: 4em 0 0em 0;
-	    color: #fff;
-    background-color: #1b5a4a;
-    border-color: #1b5a4a;
-	    width: 138px;
-	    font-size: 20px;
-	    font-family: 'Tw Cen MT';
-}

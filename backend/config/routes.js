@@ -40,6 +40,7 @@ module.exports.routes = {
   'post /api/user/delete_user': 'UserController.delete_user',
   'post /api/user/update_password': 'UserController.update_password',
   'post /api/user/update_status': 'UserController.update_status',
+  'get /api/user/get_packages': 'UserController.get_packages',
   
   
   'post /api/case/add_case': 'CasesController.create',
@@ -47,6 +48,7 @@ module.exports.routes = {
   'post /api/case/delete_case': 'CasesController.delete_case',
   'post /api/case/edit_case': 'CasesController.edit_case',
   'post /api/case/update_case': 'CasesController.update_case',
+  'post /api/case/archive_case': 'CasesController.archive_case',
   
   
 

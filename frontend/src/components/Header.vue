@@ -12,9 +12,9 @@
 							<li class="nav-item">
 								<router-link to="/" class="nav-link">Home</router-link>
 							</li>  
-							<li class="nav-item">
+							<!--li class="nav-item">
 								<a class="nav-link" href="#">Pricing</a>
-							</li>  
+							</li-->  
 							<li class="nav-item">
 								<a class="nav-link" href="#">Testimonials</a>
 							</li> 

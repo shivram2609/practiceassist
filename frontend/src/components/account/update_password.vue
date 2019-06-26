@@ -48,67 +48,91 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 export default {
  //name: 'ForgotPassword',
  data() {
-	 return {
-		  user: {
-				current_password: '',
-				password: '',
-				confirmPassword: '',
-				user_token:''
-			   },
-			   submitStatus: false,
-		}
-	},
+  return {
+   user: {
+    current_password: '',
+    password: '',
+    confirmPassword: '',
+    user_token: ''
+   },
+   submitStatus: false,
+  }
+ },
 
  //Validations
-	 validations: {
-	  user: {
-	   current_password: {
-		required
-	   },
-	   password: {
-		required,
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   },
-	   confirmPassword: {
-		required,
-	    sameAsPassword: sameAs('password'),
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   }
+ validations: {
+  user: {
+   current_password: {
+    required
+   },
+   password: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   },
+   confirmPassword: {
+    required,
+    sameAsPassword: sameAs('password'),
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   }
 
-	  }
+  }
 
-	 },
-	 
-	methods: {
-		resetForm: function(e) {
-			event.preventDefault();
-			var app = this;
-			   if (app.$v.$invalid) {
-				app.submitStatus = true
-				return;
-			   }
-			var getCode = localStorage.getItem('jwt');
-			app.user.user_token = getCode;
-		   app.axios.post('api/user/update_password', app.user)
-				   .then(function(resp){
-					   if(resp.data.status === true) {
-						   app.user = { password:'', confirmPassword:''}
-						    app.$notify({text: resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:2000});
-					   }else{
-						   app.$notify({text: resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:2000});
-					   }
-				   }).catch(function(resp){
-					   app.$notify({text: resp.data.messages.join(),type: 'error' , duration:1000,speed:2000});	
-				   });
-			
-		}
-	}
-	 
+ },
+
+ methods: {
+  resetForm: function(e) {
+   event.preventDefault();
+   var app = this;
+   if (app.$v.$invalid) {
+    app.submitStatus = true
+    return;
+   }
+   var getCode = localStorage.getItem('jwt');
+   app.user.user_token = getCode;
+   app.axios.post('api/user/update_password', app.user)
+    .then(function(resp) {
+     if (resp.data.status === true) {
+      app.user = {
+       password: '',
+       confirmPassword: ''
+      }
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 2000
+      });
+     } else {
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 2000
+      });
+     }
+    }).catch(function(resp) {
+     app.$notify({
+      text: resp.data.messages.join(),
+      type: 'error',
+      duration: 1000,
+      speed: 2000
+     });
+    });
+
+  }
+ }
+
 }
 </script>

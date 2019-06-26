@@ -14,7 +14,7 @@ module.exports = {
 			title: { type: 'string', minLength: 6, maxLength: 50, required: true },
 			description: { type: 'string', required: true},
 			price: { type: 'number', columnType: 'float', required: false},
-			case_time: { type: 'string', columnType: 'datetime', allowNull: true, },
+			case_time: { type: 'ref', columnType: 'datetime'},
 			court_name: { type: 'string', allowNull: true },
 			judge_name: { type: 'string', allowNull: true },
 			file_number: { type: 'string', allowNull: true},

@@ -57,7 +57,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Register</button>
+						<button class="btn btn-primary" type="submit">Add</button>
                             </div>
                         </div>
                     </form>
@@ -70,87 +70,101 @@
   
 </template>
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 
 export default {
-	data() {
-		return {
-			user: {
-				name: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-				type: 3,
-				company_code: ''
-				},
-				submitStatus: false
-		}
-	},
-	
-	//Validations
-	 validations: {
-	  user: {
-	   name: {
-	    required,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   email: {
-	    required,
-	    email,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   password: {
-	    required,
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   },
-	   confirmPassword: {
-		required,
-	    sameAsPassword: sameAs('password'),
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   }
-	  }
+ data() {
+  return {
+   user: {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    type: 3,
+    company_code: ''
+   },
+   submitStatus: false
+  }
+ },
 
-	 },
-	
-	methods: {
-		addClient: function(e){
-		   event.preventDefault();
-		
-			var app = this;
-			app.submitStatus = false
-		
-			if(app.$v.$invalid){
-				app.submitStatus = true;
-				return;
-			}
-			
-			if(!app.$v.$invalid) {
-				var getCode = JSON.parse(localStorage.getItem('user'));
-				if(getCode)
-				{
-					app.user.company_code = getCode.company_code;
-				}
-				
-				app.axios.post('/api/user/register',app.user)
-				.then(function (resp) {
-					
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					app.$router.push('all_clients');
-					
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-				
-			}
-			
-		}
-		
-		}
-	
+ //Validations
+ validations: {
+  user: {
+   name: {
+    required,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
+   },
+   email: {
+    required,
+    email,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
+   },
+   password: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   },
+   confirmPassword: {
+    required,
+    sameAsPassword: sameAs('password'),
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   }
+  }
+
+ },
+
+ methods: {
+  addClient: function(e) {
+   event.preventDefault();
+
+   var app = this;
+   app.submitStatus = false
+
+   if (app.$v.$invalid) {
+    app.submitStatus = true;
+    return;
+   }
+
+   if (!app.$v.$invalid) {
+    var getCode = JSON.parse(localStorage.getItem('user'));
+    if (getCode) {
+     app.user.company_code = getCode.company_code;
+    }
+
+    app.axios.post('/api/user/register', app.user)
+     .then(function(resp) {
+
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+      app.$router.push('all_clients');
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+
+   }
+
+  }
+
+ }
+
 }
-
 </script>

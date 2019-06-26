@@ -23,7 +23,8 @@
 						<td>{{cases.title}}</td>
 						<td>{{cases.description}}</td>
 						<td><router-link :to="{path:'edit_case',query:{id:cases.id}}">Edit</router-link> |
-						 <span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span>
+						 <span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span> |
+						 <span style="cursor:pointer;" @click="archiveCase(cases.id , index)">Archive</span>
 						</td>
 					</tr>
 					</template>
@@ -38,70 +39,124 @@
   
 </template>
 <script>
-
 export default {
-	data() {
-		return {
-	
-			company_code: {},
-			caseList: {},
-			deleteId: {},
-			notFound: ''
-		}
-	},
-	created(){
-				this.getAllLawyers();
-			},
-	methods: {
-		deleteCase: function(e) {
-				event.preventDefault();
-				var app = this;
-				app.deleteId = {did : e }
-				if(confirm("Do you really want to delete?")) {
-				app.axios.post('/api/case/delete_case',app.deleteId)
-				.then(function (resp) {
-					app.getAllLawyers();
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-			}
-				
-		},
-		getAllLawyers(data) {
-			var app = this;
-			app.axios.get('/api/case/caselist')
-				.then(function (resp) {
-				
-					if(resp.data.status == true) {
-						app.caseList = resp.data.response;
-						}else {
-						app.notFound = resp.data.messages.join();
-					}
-					
-				}).catch(function (resp) {
-				});
-			
-			},
-			updateStatus:function(e) {
-				event.preventDefault();
-				var app = this;
-				var statusCode = {status:e}
-				if(confirm("Do you really want to update?")) {
-				app.axios.post('/api/user/update_status',statusCode)
-				.then(function (resp) {
-					
-					app.getAllLawyers();
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-			}
-			}
-		
-	}
+ data() {
+  return {
+
+   company_code: {},
+   caseList: {},
+   deleteId: {},
+   notFound: ''
+  }
+ },
+ created() {
+  this.getAllLawyers();
+ },
+ methods: {
+  //delete case
+  deleteCase: function(e) {
+   event.preventDefault();
+   var app = this;
+   app.deleteId = {
+    did: e
+   }
+   if (confirm("Do you really want to delete?")) {
+    app.axios.post('/api/case/delete_case', app.deleteId)
+     .then(function(resp) {
+      app.getAllLawyers();
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+   }
+
+  },
+  //archived case
+  archiveCase: function(e) {
+   event.preventDefault();
+   var app = this;
+   app.deleteId = {
+    did: e
+   }
+   if (confirm("Do you really want to go?")) {
+    app.axios.post('/api/case/archive_case', app.deleteId)
+     .then(function(resp) {
+      app.getAllLawyers();
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+   }
+
+  },
+  	//getAllLawyers
+  getAllLawyers(data) {
+   var app = this;
+   app.axios.get('/api/case/caselist')
+    .then(function(resp) {
+
+     if (resp.data.status == true) {
+      app.caseList = resp.data.response;
+     } else {
+      app.notFound = resp.data.messages.join();
+     }
+
+    }).catch(function(resp) {});
+
+  },
+  //updateStatus
+  updateStatus: function(e) {
+   event.preventDefault();
+   var app = this;
+   var statusCode = {
+    status: e
+   }
+   if (confirm("Do you really want to update?")) {
+    app.axios.post('/api/user/update_status', statusCode)
+     .then(function(resp) {
+
+      app.getAllLawyers();
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+   }
+  }
+
+ }
 }
 
 </script>

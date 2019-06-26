@@ -48,64 +48,88 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 export default {
  //name: 'ForgotPassword',
  data() {
-	 return {
-		  user: {
-				password: '',
-				confirmPassword: '',
-				token_code:''
-			   },
-			   submitStatus: false,
-		}
-	},
+  return {
+   user: {
+    password: '',
+    confirmPassword: '',
+    token_code: ''
+   },
+   submitStatus: false,
+  }
+ },
 
  //Validations
-	 validations: {
-	  user: {
-	   password: {
-		required,
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   },
-	   confirmPassword: {
-		required,
-	    sameAsPassword: sameAs('password'),
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   }
+ validations: {
+  user: {
+   password: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   },
+   confirmPassword: {
+    required,
+    sameAsPassword: sameAs('password'),
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   }
 
-	  }
+  }
 
-	 },
-	 
-	methods: {
-		resetForm: function(e) {
-			event.preventDefault();
-			var app = this;
-			   if (app.$v.$invalid) {
-				app.submitStatus = true
-				return;
-			   }
-			   
-			   app.user.token_code = app.$route.query.reset_token;
-			
-		   app.axios.post('api/user/change_password', app.user)
-				   .then(function(resp){
-					   if(resp.data.status === true) {
-						   app.user = { password:'', confirmPassword:''}
-						    app.$notify({text: resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:2000});
-					   }else{
-						   app.$notify({text: resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:2000});
-					   }
-				   }).catch(function(resp){
-					   app.$notify({text: resp.data.messages.join(),type: 'error' , duration:1000,speed:2000});	
-				   });
-			
-		}
-	}
-	 
+ },
+
+ methods: {
+  resetForm: function(e) {
+   event.preventDefault();
+   var app = this;
+   if (app.$v.$invalid) {
+    app.submitStatus = true
+    return;
+   }
+
+   app.user.token_code = app.$route.query.reset_token;
+
+   app.axios.post('api/user/change_password', app.user)
+    .then(function(resp) {
+     if (resp.data.status === true) {
+      app.user = {
+       password: '',
+       confirmPassword: ''
+      }
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 2000
+      });
+     } else {
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 2000
+      });
+     }
+    }).catch(function(resp) {
+     app.$notify({
+      text: resp.data.messages.join(),
+      type: 'error',
+      duration: 1000,
+      speed: 2000
+     });
+    });
+
+  }
+ }
+
 }
 </script>

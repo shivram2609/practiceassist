@@ -17,6 +17,7 @@ import Clients from '@/components/account/all_clients'
 import AddClients from '@/components/account/add_client'
 import EditClients from '@/components/account/edit_client'
 import UpdatePassword from '@/components/account/update_password'
+import Profile from '@/components/account/profile'
 //cases
 import AddCase from '@/components/case/add_case'
 import Cases from '@/components/case/all_cases'
@@ -43,10 +44,12 @@ var router=  new Router({
 		{ path: '/edit_client', 		name: 'editclient', 	component: EditClients, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
 		
 		{ path: '/update_password', 	name: 'updatepassword', component: UpdatePassword, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		{ path: '/profile', 			name: 'profile', 		component: Profile,			meta: {		requiresAuth: 	true,	layout: "backend" 	}},
 		
 		{ path: '/add_case', 			name: 'addcase', 		component: AddCase, 		meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
 		{ path: '/all_cases', 			name: 'cases', 			component: Cases, 			meta: { 	requiresAuth: 	true,	layout: "backend"	}},
 		{ path: '/edit_case', 			name: 'editcase', 		component: EditCase,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
+		
 	]
 });
 router.beforeEach((to, from, next) => {

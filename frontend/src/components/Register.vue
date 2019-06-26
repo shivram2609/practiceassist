@@ -2,11 +2,46 @@
 	<section class="login-sec">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10 offset-md-1">
+				<div class="col-md-12">
 					<div class="register-firm">
-						<h3>Register</h3>
 							<form  class="register-from needs-validation" novalidate @submit="registerForm">
+							<div v-if="step === 1">
+								<section class="">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-12">
+											   <div class="price-plan">
+													<h2>Pricing Packages</h2>
+											   </div>
+											</div>
+											<div class="col-lg-10 offset-lg-1">
+											<div class="row">
+
+											<div v-for="pack, index in packagesList" class="col-lg-4 col-md-6 col-sm-6">
+												<div class="trial-version">
+													<ul>
+														<li class="check-trial"><a href="#">{{pack.name}}</a></li>
+														<li><a href="#">${{pack.price}} /{{pack.duration}} Month</a></li>
+														<li><a href="#">{{pack.lawyers}} Lawyer</a></li>
+														<li><a href="#">{{pack.clients}} Client</a></li>
+													</ul>
+													<div class="trial-btn">
+														<button type="button" @click.prevent="next(pack.id, pack.name,pack.price)" class="btn btn-primary">{{pack.name}}</button>
+													</div>
+												</div>
+											</div>
+										
+											
+											</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							
+							</div>
+						<div v-if="step === 2">
 						<div class="layer-firms-changes">
+							
 							<div class="radio-btn">
 								<label class="radio">Law Firm
 								 
@@ -22,7 +57,7 @@
 						</div>
 						<div class="login-form">
 							
-						
+								
 								<div class="row">
 									<div class="form-group col-md-6">
 										<label for="userName">Full Name</label>
@@ -75,9 +110,13 @@
 										<div class="invalid-feedback text-left" v-if="!$v.user.confirmPassword.maxLength">Password must have at max {{ $v.user.confirmPassword.$params.maxLength.max }} characters.</div>
 										<div class="invalid-feedback text-left small "  v-if="!$v.user.confirmPassword.sameAsPassword">Confirm password must be identical.</div>
 									</div>
-									
-									<div class="form-group col-md-12">
+								
+									<div class="form-group col-md-3">
+										<div>Package Type: <strong>{{packName}}</strong> <a href="javascript:void(0)" @click.prevent="prev()">Change</a></div>
+									</div>
+									<div class="form-group col-md-6">
 										<button class="btn btn-primary" type="submit">Register</button>
+										
 									</div>
 									<!--div class="social-link col-md-12">
                                         <h4>Or Login Using</h4>
@@ -92,6 +131,7 @@
 								</div>
 							
 						</div>
+						</div>
 						</form>
 					</div>
 				</div>
@@ -103,77 +143,134 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
+import {
+ required,
+ minLength,
+ maxLength,
+ sameAs,
+ email
+} from 'vuelidate/lib/validators'
 
 
 export default {
-	data() {
-	  return {
-	   user: {
-	    name: '',
-	    email: '',
-	    password: '',
-	    confirmPassword: '',
-	    type: 0
-	   },
-	    submitStatus: false
-	  }
-	 },
-	 
-	//Validations
-	 validations: {
-	  user: {
-	   name: {
-	    required,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   email: {
-	    required,
-	    email,
-	    minLength: minLength(5),
-	    maxLength: maxLength(50)
-	   },
-	   password: {
-	    required,
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   },
-	   confirmPassword: {
-		required,
-	    sameAsPassword: sameAs('password'),
-	    minLength: minLength(6),
-	    maxLength: maxLength(20)
-	   }
-	  }
+ data() {
+  return {
+	step:1,
+   user: {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    type: 0,
+    package_id: '',
+    price:''
+   },
+   submitStatus: false,
+   packagesList: '',
+   packageName:''
+  }
+ },
 
-	 },
-	 //methods
-	 methods: {
-	  registerForm: function(e) {
-	   event.preventDefault();
-	   var app = this;
-	   let vm = this;
-	   app.submitStatus = false
-		   if (app.$v.$invalid) {
-			app.submitStatus = true
-			return;
-		   }
-		   
-		   
-	   if (!app.$v.$invalid) {
-			app.axios.post('/api/user/register',app.user)
-			.then(function (resp) {
-		
-				//app.user = {name: '' , email:'', password:'',sameAsPassword:''}
-				
-				app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-				
-			}).catch(function (resp) {
-				app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-			});
-	   }
-	  }
-	 }
-	}
+ //Validations
+ validations: {
+  user: {
+   name: {
+    required,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
+   },
+   email: {
+    required,
+    email,
+    minLength: minLength(5),
+    maxLength: maxLength(50)
+   },
+   password: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   },
+   confirmPassword: {
+    required,
+    sameAsPassword: sameAs('password'),
+    minLength: minLength(6),
+    maxLength: maxLength(20)
+   }
+  }
+
+ },
+ computed() {
+ console.log('computed this here');
+ },
+ watch: {
+	step(newValue, oldValue) {
+      console.log('Updating from ${oldValue} to ${newValue}');
+
+      // Do whatever makes sense now
+      if (newValue === '1') {
+        this.complex = {
+          deep: 'some deep object',
+        };
+      }
+  }
+ },
+ mounted() {
+  var app = this;
+  app.getPackagesList();
+ },
+ //methods
+ methods: {
+  getPackagesList: function() {
+   var app = this;
+   	app.axios.get('/api/user/get_packages')
+   .then(function(resp) {
+     app.packagesList = resp.data.response;
+	   }).catch(function(resp){
+	 });
+  },
+  prev() {
+   var app = this;
+   app.step--;
+  },
+  next(id, pname, price) {
+    var app = this;
+    app.user.package_id = id;
+    app.user.price = price;
+    app.packName = pname;
+   app.step++;
+  },
+  //register function
+  registerForm: function(e) {
+   event.preventDefault();
+   var app = this;
+   let vm = this;
+   app.submitStatus = false
+   if (app.$v.$invalid) {
+    app.submitStatus = true
+    return;
+   }
+   
+   if (!app.$v.$invalid) {
+    app.axios.post('/api/user/register', app.user)
+     .then(function(resp) {
+	  //app.user = {name: '' , email:'', password:'',sameAsPassword:''}
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+   }
+  }
+ }
+}
 </script>

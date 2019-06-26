@@ -52,7 +52,7 @@
 						<a href="#" class=""><i class="fa fa-fw fa-table"></i> <span> Settings </span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled" style="">
 								<li><router-link to="update_password">Change Password</router-link></li>
-								<li></li>
+								<li><router-link to="profile">Profile</router-link></li>
 							</ul>
 					</li>
 			</ul>

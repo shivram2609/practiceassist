@@ -23,28 +23,30 @@
 export default {
  //name: 'ConfirmEmail',
  data() {
-	 return {
-		 confirmEmail:'',
-		 successMessage:'',
-		 errorMessage:'',
-		}
-	},
-	 mounted() {
-		 
-		 var app = this;
-		 app.confirmEmail = {confirm_token: this.$route.query.confirm_token}
-		  app.axios.post('api/user/confirm_email', app.confirmEmail)
-			   .then(function(resp){
-				   if(resp.data.status == true){
-					   app.successMessage = resp.data.messages.join();
-				   }else{ 
-					   app.successMessage = resp.data.messages.join();
-					   }
-				}).catch(function(resp){
-				  
-				 app.successMessage = resp.data.message;
-			   });
-		}
-	 
+  return {
+   confirmEmail: '',
+   successMessage: '',
+   errorMessage: '',
+  }
+ },
+ mounted() {
+
+  var app = this;
+  app.confirmEmail = {
+   confirm_token: this.$route.query.confirm_token
+  }
+  app.axios.post('api/user/confirm_email', app.confirmEmail)
+   .then(function(resp) {
+    if (resp.data.status == true) {
+     app.successMessage = resp.data.messages.join();
+    } else {
+     app.successMessage = resp.data.messages.join();
+    }
+   }).catch(function(resp) {
+
+    app.successMessage = resp.data.message;
+   });
+ }
+
 }
 </script>

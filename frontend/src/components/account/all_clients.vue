@@ -37,71 +37,95 @@
   
 </template>
 <script>
-
 export default {
-	data() {
-		return {
-	
-			company_code: {},
-			userList: {},
-			deleteId: {},
-			notFount: ''
-		}
-	},
-	created(){
-				this.getAllLawyers();
-			},
-	methods: {
-		deleteUser: function(e, index) {
-				event.preventDefault();
-				var app = this;
-				app.deleteId = {did : e }
-				if(confirm("Do you really want to delete?")) {
-				app.axios.post('/api/user/delete_user',app.deleteId)
-				.then(function (resp) {
-					app.getAllLawyers();
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-			}
-				
-		},
-		getAllLawyers(data) {
-			var app = this;
-			var getCode = JSON.parse(localStorage.getItem('user'));
-			app.company_code = {cCode : getCode.company_code, type: 3};
-			app.axios.post('/api/user/userlist',app.company_code)
-				.then(function (resp) {
-					if(resp.data.status == true) {
-						app.userList = resp.data.response;
-						}else {
-						app.notFount = resp.data.messages.join();
-					}
-					
-				}).catch(function (resp) {
-				});
-			
-			},
-			updateStatus:function(e, index) {
-				event.preventDefault();
-				var app = this;
-				var statusCode = {status:e}
-				if(confirm("Do you really want to update?")) {
-				app.axios.post('/api/user/update_status',statusCode)
-				.then(function (resp) {
-					
-					app.getAllLawyers();
-					app.$notify({text:resp.data.messages.join(),type: resp.data.status ? 'success' : 'error',duration:1000,speed:3000});
-					
-				}).catch(function (resp) {
-					app.$notify({text: resp.message,type: 'error',duration:1000,speed:3000});
-				});
-			}
-			}
-		
-	}
-}
+ data() {
+  return {
 
+   company_code: {},
+   userList: {},
+   deleteId: {},
+   notFount: ''
+  }
+ },
+ created() {
+  this.getAllLawyers();
+ },
+ methods: {
+  deleteUser: function(e, index) {
+   event.preventDefault();
+   var app = this;
+   app.deleteId = {
+    did: e
+   }
+   if (confirm("Do you really want to delete?")) {
+    app.axios.post('/api/user/delete_user', app.deleteId)
+     .then(function(resp) {
+      app.getAllLawyers();
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+   }
+
+  },
+  getAllLawyers(data) {
+   var app = this;
+   var getCode = JSON.parse(localStorage.getItem('user'));
+   app.company_code = {
+    cCode: getCode.company_code,
+    type: 3
+   };
+   app.axios.post('/api/user/userlist', app.company_code)
+    .then(function(resp) {
+     if (resp.data.status == true) {
+      app.userList = resp.data.response;
+     } else {
+      app.notFount = resp.data.messages.join();
+     }
+
+    }).catch(function(resp) {});
+
+  },
+  updateStatus: function(e, index) {
+   event.preventDefault();
+   var app = this;
+   var statusCode = {
+    status: e
+   }
+   if (confirm("Do you really want to update?")) {
+    app.axios.post('/api/user/update_status', statusCode)
+     .then(function(resp) {
+
+      app.getAllLawyers();
+      app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
+   }
+  }
+
+ }
+}
 </script>
