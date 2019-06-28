@@ -22,7 +22,7 @@ module.exports = {
     email: req.param('email'),
     password: req.param('password'),
     type: req.param('type'),
-    package_id: req.param('package_id'),
+    //package_id: req.param('package_id'),
     company_code: req.param('company_code'),
     confirmation_token: req.param('company_code') ? 1 : uuidv1(),
     is_email_confirmed: req.param('company_code') ? 1 : 0,
@@ -43,7 +43,7 @@ module.exports = {
     password: req.param('password'),
     type: req.param('type'),
     confirmation_token: uuidv1(),
-    package_id: req.param('package_id')
+    //package_id: req.param('package_id')
    }
 
    //~ //create user

@@ -35,20 +35,21 @@ var router=  new Router({
 		{ path: '/confirm_email', 		name: 'confirmemail', 	component: ConfirmEmail, 	meta: { 	guest: 			true, 	layout: "frontend" 	}},
 		{ path: '/forgot_password', 	name: 'forgotpassword', component: ForgotPassword, 	meta: { 	guest: 			true, 	layout: "frontend" 	}},
 		{ path: '/change_password', 	name: 'changepassword', component: ChangePassword,	meta: { 	guest: 			true,	layout: "frontend"	}},
+		
+		{ path: '/settings/update_password', 	name: 'updatepassword', component: UpdatePassword, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		{ path: '/settings/profile', 			name: 'profile', 		component: Profile,			meta: {		requiresAuth: 	true,	layout: "backend" 	}},
+		
 		{ path: '/account', 			name: 'account', 		component: Account, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-		{ path: '/all_lawyers', 		name: 'lawyers', 		component: Lawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-		{ path: '/add_lawyer', 			name: 'addlawyer', 		component: AddLawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-		{ path: '/edit_lawyer', 		name: 'editlawyer', 	component: EditLawyers,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
-		{ path: '/all_clients', 		name: 'clients', 		component: Clients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
-		{ path: '/add_client', 			name: 'addclient', 		component: AddClients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
-		{ path: '/edit_client', 		name: 'editclient', 	component: EditClients, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		{ path: '/lawyers', 			name: 'lawyers', 		component: Lawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/lawyers/add', 		name: 'addlawyer', 		component: AddLawyers, 		meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/lawyers/edit', 		name: 'editlawyer', 	component: EditLawyers,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/clients', 			name: 'clients', 		component: Clients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/clients/add', 		name: 'addclient', 		component: AddClients, 		meta: { 	requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/clients/edit', 		name: 'editclient', 	component: EditClients, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
 		
-		{ path: '/update_password', 	name: 'updatepassword', component: UpdatePassword, 	meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
-		{ path: '/profile', 			name: 'profile', 		component: Profile,			meta: {		requiresAuth: 	true,	layout: "backend" 	}},
-		
-		{ path: '/add_case', 			name: 'addcase', 		component: AddCase, 		meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
-		{ path: '/all_cases', 			name: 'cases', 			component: Cases, 			meta: { 	requiresAuth: 	true,	layout: "backend"	}},
-		{ path: '/edit_case', 			name: 'editcase', 		component: EditCase,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
+		{ path: '/cases', 				name: 'cases', 			component: Cases, 			meta: { 	requiresAuth: 	true,	layout: "backend"	}},
+		{ path: '/cases/add', 			name: 'addcase', 		component: AddCase, 		meta: { 	requiresAuth: 	true, 	layout: "backend"	}},
+		{ path: '/cases/edit', 			name: 'editcase', 		component: EditCase,		meta: {		requiresAuth: 	true,	layout: "backend" 	}},
 		
 	]
 });

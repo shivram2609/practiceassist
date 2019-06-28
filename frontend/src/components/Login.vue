@@ -8,7 +8,7 @@
 					   <h3>Log in</h3>
 							<div class="login-form">
 								
-								<form :class="{'was-validated': $v.$invalid && submitStatus }" class="register-from needs-validation" novalidate @submit="loginForm">
+								<form  :class="{'was-validated': $v.$invalid && submitStatus }" class="register-from needs-validation" novalidate @submit="loginForm">
 									
 									<div class="col-md-8 offset-md-2" :class="{ 'was-validated': $v.user.email.$dirty}">
 										<div class="form-group">

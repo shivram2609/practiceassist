@@ -1,66 +1,42 @@
 <template>
  <div class="container-fluid">
-	 <div class="row">
-									<div class="col-xl-12">
-											<div class="breadcrumb-holder">
-													<h1 class="main-title float-left">Dashboard</h1>
-													<ol class="breadcrumb float-right">
-														<li class="breadcrumb-item">Home</li>
-														<li class="breadcrumb-item active">Dashboard</li>
-													</ol>
-													<div class="clearfix"></div>
-											</div>
-									</div>
-						</div>
-						<div class="alert alert-warning" role="alert">
-							<h4 class="alert-heading"></h4>
-							<p>Next Hearing Date () </p>
-						</div>
-							<div class="row">
-									<div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-											<div class="card-box noradius noborder bg-default">
-													<i class="fa fa-file-text-o float-right text-white"></i>
-													<h6 class="text-white text-uppercase m-b-20">Cases</h6>
-													<h1 class="m-b-20 text-white counter">0</h1>
-													<span class="text-white">0 New Cases</span>
-											</div>
-									</div>
-
-									<div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-											<div class="card-box noradius noborder bg-warning">
-													<i class="fa fa-bar-chart float-right text-white"></i>
-													<h6 class="text-white text-uppercase m-b-20">Lawyers</h6>
-													<h1 class="m-b-20 text-white counter">0</h1>
-													<span class="text-white">0 New Lawyers</span>
-											</div>
-									</div>
-
-									<div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-											<div class="card-box noradius noborder bg-info">
-													<i class="fa fa-user-o float-right text-white"></i>
-													<h6 class="text-white text-uppercase m-b-20">Clients</h6>
-													<h1 class="m-b-20 text-white counter">0</h1>
-													<span class="text-white">0 New Clients</span>
-											</div>
-									</div>
-
-									<div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-											<div class="card-box noradius noborder bg-danger">
-													<i class="fa fa-bell-o float-right text-white"></i>
-													<h6 class="text-white text-uppercase m-b-20">Completed cases</h6>
-													<h1 class="m-b-20 text-white counter">0</h1>
-											</div>
-									</div>
-									<div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-											<div class="card-box noradius noborder bg-danger">
-													<i class="fa fa-bell-o float-right text-white"></i>
-													<h6 class="text-white text-uppercase m-b-20">Pending cases</h6>
-													<h1 class="m-b-20 text-white counter">0</h1>
-											</div>
-									</div>
-							</div>
-	 
-</div>
+                <div class="dasboard">
+                    <h2>Dashboard</h2>
+                </div>   <div class="row">   
+                            <div class="col-md-5 offset-md-1">
+                                    <div class="notifications">
+                                        <div class="calender-notification">
+                                            <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                <h3>Calendar Notifications</h3>
+                                <p>Next Hearing Date:<span> 4-04-2019</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                                <div class="notifications date-creations">
+                                    <div class="calender-notification">
+                                        <span><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                                    </div>
+                            <h3>Invoice Notifications</h3>
+                            <p>Invoice Name:<span> lawyerscarsdoc</span></p>
+                            <p>Created Date:<span> 4-04-2019</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                	 <div class="col-md-10 offset-md-1">
+                        <div class="doc-notification">
+                            <h3><i class="fa fa-file-text-o" aria-hidden="true"></i> Document Notifications</h3>
+                            <ul>
+                                <li>Document Name:<span> lawyerscarsdoc</span></li>
+                                <li>Created By:<span> Lawyer askwasi</span></li>
+                                <li>Created Date:<span> 4-04-2019</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<!-- END container-fluid -->
 </template>
 <script>
 	export default {

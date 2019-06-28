@@ -67,7 +67,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
 						<button class="btn btn-primary" type="submit">Update</button>
-						<router-link class="btn btn-primary" to="all_cases">Back</router-link>
+						<router-link class="btn btn-primary" to="/cases">Back</router-link>
                             </div>
                         </div>
                     </form>

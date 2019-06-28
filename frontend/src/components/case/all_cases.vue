@@ -1,41 +1,110 @@
 <template>
-	<div class="container-fluid">
-				
-        <div class="col-md-11">
-            <div class="card">
-					<div class="card-header">
-					</div>
-					<div class="card-body">
-						 <table class="Marchant-table table table-bordered " width="100%">
-					  <tr>		
-						<th>S.no</th>
-						<th>Case Name</th>
-						<th>Description</th>
-						<th colspan="3"> ACTION </th>
-					  </tr>	
+<!--template v-if="notFound">
+<tr><td colspan="4" style="text-align:center">{{notFound}}</td></tr>
+</template>
+<template v-else>
+<tr v-for="cases, index in caseList">
+<td>{{cases.id}}</td>
+<td>{{cases.title}}</td>
+<td>{{cases.description}}</td>
+<td><router-link :to="{path:'/cases/edit',query:{id:cases.id}}">Edit</router-link> |
+<span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span> |
+<span style="cursor:pointer;" @click="archiveCase(cases.id , index)">Archive</span-->
+<div class="container-fluid">
+	<div class="layer-client">
+		<div class="all-cases-view">
+			<h2>All <span>Cases</span></h2>
+		</div>
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+			
+				<div class="all-client-tabs">
+					
 		
-					 <template v-if="notFound">
-						<tr><td colspan="4" style="text-align:center">{{notFound}}</td></tr>
-					</template>
-					<template v-else>
-						 <tr v-for="cases, index in caseList">
-						<td>{{cases.id}}</td>
-						<td>{{cases.title}}</td>
-						<td>{{cases.description}}</td>
-						<td><router-link :to="{path:'edit_case',query:{id:cases.id}}">Edit</router-link> |
-						 <span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span> |
-						 <span style="cursor:pointer;" @click="archiveCase(cases.id , index)">Archive</span>
-						</td>
-					</tr>
-					</template>
-				
-					</table>
-					</div>
+					<b-tabs>
+					  <b-tab title="Active Cases">
+						<b-card-text>
+							<div id="active-cases" class="tab-pane fade active show">
+								<div class="layer-name">
+									<div id="accordion" class="accordion">
+										<b-card no-body class="mb-1" v-for="user, index in caseList">
+											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
+												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
+												<p>{{user.title}}</p>
+												</b-button>
+											  </b-card-header>
+						
+												<b-collapse :id="'accordion-'+ index" visible accordion="my-accordion" role="tabpanel">
+													<b-card-body class="background-change">
+													  <b-card-text>
+														
+														  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+														  <h3>Hearing  Date &amp; Time</h3>
+														  <ul class="check-date-time">
+																<li><a href="#"><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>11:00 PM</a>
+																</li>
+																<li><a href="#"><span><i class="fa fa-calendar" aria-hidden="true"></i></span>8-4-2019</a>
+																</li>
+															</ul>
+															<div class="view-detail-btn">
+																<button type="button" class="btn btn-primary">View Details</button>
+															</div>
+													  </b-card-text>
+													</b-card-body>
+												  </b-collapse>
+											</b-card>
+									</div>
+								</div>
+							</div>
+							
+						</b-card-text>
+					  </b-tab>
+
+					  <b-tab no-body title="Archived Cases">
+						<b-card-text>
+							<div id="active-cases" class="tab-pane fade active show">
+								<div class="layer-name">
+									<div id="accordion" class="accordion">
+										<b-card no-body class="mb-1" v-for="user, index in caseList">
+											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
+												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
+												<p>{{user.title}}</p>
+												</b-button>
+											  </b-card-header>
+						
+												<b-collapse :id="'accordion-'+ index" visible accordion="my-accordion" role="tabpanel">
+													<b-card-body class="background-change">
+													  <b-card-text>
+														
+														  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+														  <h3>Hearing  Date &amp; Time</h3>
+														  <ul class="check-date-time">
+																<li><a href="#"><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>11:00 PM</a>
+																</li>
+																<li><a href="#"><span><i class="fa fa-calendar" aria-hidden="true"></i></span>8-4-2019</a>
+																</li>
+															</ul>
+															<div class="view-detail-btn">
+																<button type="button" class="btn btn-primary">View Details</button>
+															</div>
+													  </b-card-text>
+													</b-card-body>
+												  </b-collapse>
+											</b-card>
+									</div>
+								</div>
+							</div>
+						</b-card-text>
+					  </b-tab>
+					</b-tabs>
+					
+									
+				</div>
 			</div>
-        </div>
-        
-        
-    </div>
+		</div>
+	</div>
+</div>
+<!-- END container-fluid -->
   
 </template>
 <script>
@@ -160,3 +229,10 @@ export default {
 }
 
 </script>
+<style>
+a.btn.btn-custom-info {
+    background-color: #012b58;
+    color: #fff;
+}
+</style>
+

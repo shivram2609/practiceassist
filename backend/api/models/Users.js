@@ -23,7 +23,7 @@ module.exports = {
 	confirmation_token: { type: 'string', allowNull: true},
 	reset_token: { type: 'string', allowNull: true},
 	price: { type: 'number', columnType: 'float', allowNull: true},
-	package_id: { type: 'number', columnType: 'integer', required: true},
+	package_id: { type: 'number', columnType: 'integer', required: false},
 	company_code: { type: 'string', allowNull: true},
 	company_id: {  model: 'companies'  }
 	

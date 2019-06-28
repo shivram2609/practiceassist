@@ -43,7 +43,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
 						<button class="btn btn-primary" type="submit">Update</button>
-						<router-link class="btn btn-primary" to="all_clients">Back</router-link>
+						<router-link class="btn btn-primary" to="/clients">Back</router-link>
                             </div>
                         </div>
                     </form>
@@ -135,7 +135,7 @@ export default {
        duration: 1000,
        speed: 3000
       });
-      app.$router.push('all_clients');
+      app.$router.push('clients');
      }).catch(function(resp) {
       app.$notify({
        text: resp.message,

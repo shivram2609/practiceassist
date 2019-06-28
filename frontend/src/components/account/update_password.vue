@@ -1,50 +1,47 @@
 <template>
-	<div>
-		<section class="login-sec">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 offset-md-2">
-				   <div class="login-page">
-					   <h3>Update Password</h3>
-							<div class="login-form">
-								
-								<form class="register-from needs-validation" @submit="resetForm">
-										<div class="form-group">
-										<label for="userPassword">Password</label>
-										<input type="password" :class="{'is-invalid': $v.user.current_password.$error || submitStatus == true}" class="form-control" id="userCurrentPassword" v-model.trim="$v.user.current_password.$model" placeholder="Password ">		
-										<div class="invalid-feedback text-left" v-if="!$v.user.current_password.required">Please enter current password.</div>
+<div class="container-fluid">
+	<div class="add-cases changepassword">
+		<div class="add-new-cases text-center">
+			<h2>Change Password</h2>
+		</div>
+		<div class="col-md-8 offset-md-2">
+			<div class="changepassword">
+				<form class="register-from needs-validation" @submit="resetForm">
+					<div class="form-group no-label">
+						<label for="usr">Current Password:</label>
+						<input type="password" :class="{'is-invalid': $v.user.current_password.$error || submitStatus == true}" class="form-control" id="userCurrentPassword" v-model.trim="$v.user.current_password.$model" placeholder="Current Password" ><i class="fa fa-eye-slash" aria-hidden="true"></i>		
+						<div class="invalid-feedback text-left" v-if="!$v.user.current_password.required">Please enter current password.</div>
 										
-									</div>
-									
-									<div class="form-group">
-										<label for="userPassword">Password</label>
-										<input type="password" :class="{'is-invalid': $v.user.password.$error || submitStatus == true}" class="form-control" id="userPassword" v-model.trim="$v.user.password.$model" placeholder="Password ">		
-										<div class="invalid-feedback text-left" v-if="!$v.user.password.required">Please enter password.</div>
-										<div class="invalid-feedback text-left" v-if="!$v.user.password.minLength">Password must have at least {{ $v.user.password.$params.minLength.min }} characters.</div>
-										<div class="invalid-feedback text-left" v-if="!$v.user.password.maxLength">Password must have at max {{ $v.user.password.$params.maxLength.max }} characters.</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="userConfirmPassword">Confirm password</label>
-										<input type="password" :class="{'is-invalid': $v.user.confirmPassword.$error || submitStatus == true}" class="form-control" id="userConfirmPassword" v-model.trim="$v.user.confirmPassword.$model" placeholder="Confirm password ">
+					</div>
+					<div class="form-group no-label">
+						<label for="pwd">New Password:</label>
+				
+						<input type="password" :class="{'is-invalid': $v.user.password.$error || submitStatus == true}" class="form-control" id="userPassword" v-model.trim="$v.user.password.$model" placeholder="Password "><i class="fa fa-eye-slash" aria-hidden="true"></i>
+						<div class="invalid-feedback text-left" v-if="!$v.user.password.required">Please enter password.</div>
+						<div class="invalid-feedback text-left" v-if="!$v.user.password.minLength">Password must have at least {{ $v.user.password.$params.minLength.min }} characters.</div>
+						<div class="invalid-feedback text-left" v-if="!$v.user.password.maxLength">Password must have at max {{ $v.user.password.$params.maxLength.max }} characters.</div>
+					</div>
+					<div class="form-group no-label">
+						<label for="pwd">Confirm Password:</label>
+						
+						<input type="password" :class="{'is-invalid': $v.user.confirmPassword.$error || submitStatus == true}" class="form-control" id="userConfirmPassword" v-model.trim="$v.user.confirmPassword.$model" placeholder="Confirm password "><i class="fa fa-eye-slash" aria-hidden="true"></i>
 										
 										<div class="invalid-feedback text-left" v-if="!$v.user.confirmPassword.required">Please enter confirm password.</div>
 										<div class="invalid-feedback text-left" v-if="!$v.user.confirmPassword.minLength">Password must have at least {{ $v.user.confirmPassword.$params.minLength.min }} characters.</div>
 										<div class="invalid-feedback text-left" v-if="!$v.user.confirmPassword.maxLength">Password must have at max {{ $v.user.confirmPassword.$params.maxLength.max }} characters.</div>
 										<div class="invalid-feedback text-left small "  v-if="!$v.user.confirmPassword.sameAsPassword">Confirm password must be identical.</div>
-									</div>
-									
-									<div class="form-group">
-										<button class="btn btn-primary" type="submit">Update</button>
-									</div>
-								</form>
-				           </div>
-               </div>
-            </div>
-        </div>
-    </div>
-</section>
+					</div>
+					<div class="save-btn text-center">
+						<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
+</div>
+
+
+				
 </template>
 
 <script>

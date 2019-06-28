@@ -45,7 +45,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
 						<button class="btn btn-primary" type="submit">Update</button>
-						<router-link class="btn btn-primary" to="all_lawyers">Back</router-link>
+						<router-link class="btn btn-primary" to="/lawyers">Back</router-link>
                             </div>
                         </div>
                     </form>
@@ -103,10 +103,8 @@ export default {
  },
  mounted() {
   var app = this;
-  app.userId = {
-   uid: this.$route.query.id
-  }
-
+  app.userId = { uid: this.$route.query.id }
+console.log(app.userId);
   app.axios.post('/api/user/edit_user', app.userId)
    .then(function(resp) {
 
@@ -137,7 +135,7 @@ export default {
        duration: 1000,
        speed: 3000
       });
-      app.$router.push('all_lawyers');
+      app.$router.push('lawyers');
      }).catch(function(resp) {
       app.$notify({
        text: resp.message,

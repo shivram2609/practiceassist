@@ -1,11 +1,8 @@
 <template>
 	<footer class="footer">
-		<span class="text-right">
-		Copyright © 2019 by  <a target="_blank" href="javascript:void(0)">Practice Assistant</a>. All rights reserved.
-		</span>
-		<span class="float-right">
-		
-		</span>
+		<ul>
+			<li><a href="#">© 2019 Practice Assistant Inc.</a></li>
+		</ul>
 	</footer>
 </template>
 <script>
