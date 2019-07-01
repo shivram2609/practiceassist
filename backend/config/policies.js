@@ -31,6 +31,7 @@ module.exports.policies = {
     'update_password':true,
     'update_status':true,
     'get_packages':true,
+    'filter_record':true
   },
   'CasesController': {
 	  'create':true,

@@ -107,7 +107,7 @@ export default {
      if (resp.data.status === true) {
       localStorage.setItem('user', JSON.stringify(resp.data.response.user))
       localStorage.setItem('jwt', resp.data.response.token)
-	  app.$router.go()
+
       if (localStorage.getItem('jwt') != null) {
        app.$emit('loggedIn');
 
@@ -115,6 +115,7 @@ export default {
         app.$router.push(this.$route.params.nextUrl)
        } else {
         app.$router.push('account');
+       // app.$router.go()
        }
       }
      }

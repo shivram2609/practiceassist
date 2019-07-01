@@ -1,60 +1,45 @@
 <template>
 	<div class="container-fluid">
-				
-        <div class="col-md-11">
-            <div class="card">
-					<div class="card-header">
-		
-					</div>
-					<div class="card-body">
-						<form  class="register-from needs-validation" novalidate @submit="updateLawyer">
-				
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                            <div class="col-md-6">
-                                <input id="name" type="text" v-model="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error}" class="form-control" name="name" value="">
+                <div class="add-client">
+                <div class="add-clients-view text-center">
+                    <h2>Edit <span>Lawyer</span></h2>
+                </div>   
+                    <div class="col-md-8 offset-md-2">
+                        <form  class="register-from needs-validation" novalidate @submit="updateLawyer">
+							<div class="form-group">
+							  <label for="usr">Name:</label>
+							  <input id="name" type="text" placeholder="Name" v-model="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error || submitStatus == true}" class="form-control" name="name" value="">
                                 <div  class="invalid-feedback text-left" v-if="!$v.user.name.required">Please enter user name.</div>
                                 <div class="invalid-feedback text-left" v-if="!$v.user.name.minLength">Name must have at least {{ $v.user.name.$params.minLength.min }} characters.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.name.maxLength">Name must have at max {{ $v.user.name.$params.maxLength.max }} characters.</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" readOnly :class="{'is-invalid': $v.user.email.$error}" v-model="$v.user.email.$model" class="form-control" name="email" value="">
+							</div>
+							<div class="form-group">
+							  <label for="usr">Name:</label>
+							   <input id="email" type="email" placeholder="Email" :class="{'is-invalid': $v.user.email.$error || submitStatus == true}" v-model="$v.user.email.$model" class="form-control" name="email" value="">
                                  <div class="invalid-feedback text-left" v-if="!$v.user.email.required">Please enter email.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.email.email">Please enter valid email.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.email.minLength">Email must have at least {{ $v.user.email.$params.minLength.min }} characters.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.email.maxLength">Email must have at max {{ $v.user.email.$params.maxLength.max }} characters.</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" :class="{'is-invalid': $v.user.password.$error	}" v-model="$v.user.password.$model" class="form-control" name="password">
+							</div>
+							
+							<div class="form-group">
+							  <label for="pwd">Password:</label>
+							  <input id="password" type="password" placeholder="Password" :class="{'is-invalid': $v.user.password.$error || submitStatus == true}" v-model="$v.user.password.$model" class="form-control" name="password">
                                <div class="invalid-feedback text-left" v-if="!$v.user.password.required">Please enter password.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.password.minLength">Password must have at least {{ $v.user.password.$params.minLength.min }} characters.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.password.maxLength">Password must have at max {{ $v.user.password.$params.maxLength.max }} characters.</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Update</button>
-						<router-link class="btn btn-primary" to="/lawyers">Back</router-link>
-                            </div>
-                        </div>
-                    </form>
+							</div>
+							<div class="save-btn text-center">
+								<button type="submit" class="btn btn-primary">Update</button>
+								<router-link class="btn btn-primary" to="/lawyers">Back</router-link>
+							</div>
+						  </form>
                     </div>
-			</div>
-        </div>
-        
-        
-    </div>
+            </div>
+            </div>
+		</div>
+		
+	
   
 </template>
 <script>
@@ -135,7 +120,7 @@ console.log(app.userId);
        duration: 1000,
        speed: 3000
       });
-      app.$router.push('lawyers');
+      app.$router.push('/lawyers');
      }).catch(function(resp) {
       app.$notify({
        text: resp.message,

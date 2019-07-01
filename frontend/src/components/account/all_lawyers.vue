@@ -11,21 +11,26 @@
 		</div>
 		<div class="col-md-12">
 			<div class="row add-class">
+			 <form method="post" class="row">
 				<div class="sort-by">
-					<div class="dropdown">
-						<b-dropdown id="dropdown-1" text="Sort By" variant="primary">
-							<b-dropdown-item>Name</b-dropdown-item>
-							<b-dropdown-item>Case Name</b-dropdown-item>
-							<b-dropdown-item>Next Hearing Date</b-dropdown-item>
-						  </b-dropdown>
+					<div class="select">
+						<span class="arr"></span>
+						<b-form-select v-model="user.selected" class="mb-3">
+						  <option class="sorting-list" disabled :value="null">Select</option>
+						  <option class="sorting-list" value="name">Name</option>
+						  <option class="sorting-list" value="case">Case Name</option>
+						  <!--option class="sorting-list" value="date">Next Hearing Date</option-->
+						   <option class="sorting-list" value="all">All</option>
+						</b-form-select>
 					</div>
 				</div>
 				<div class=" all-client-search">
 					<div class="input-group">
-						<input type="text" class="form-control" name="x" placeholder="Search here"> <span class="input-group-btn">
-						<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button></span>
+						<input type="text" v-model="user.search" class="form-control" name="x" placeholder="Search here"> <span class="input-group-btn">
+						<button class="btn btn-default" type="button" @click="onChangeValue()"><i class="fa fa-search"></i></button></span>
 					</div>
 				</div>
+			</form>
 			</div>
 		</div>
 		<div class="col-md-8 offset-md-2">
@@ -34,7 +39,7 @@
 					<div class="mb-0">
 					
 						<template v-if="notFount">
-							<tr><td colspan="5" style="text-align:center;">{{notFount}}</td> </tr>
+							<b-alert show variant="warning" class="text-center">{{notFount}}</b-alert>
 						</template>
 						<template v-else>
 							<b-card no-body class="mb-1" v-for="user, index in userList" v-bind:index="user.id">
@@ -44,6 +49,8 @@
 									<img src="img/user-icon.png">
 								</div>
 								<p>Lawyer Name:<span> {{user.name}}</span></p>
+								<router-link class="pull-right" :to="{path:'lawyers/edit',query:{id:user.id}}">Edit</router-link> 
+								<span class="pull-right" @click="deleteUser(user.id , index)">Delete</span>
 								</b-button>
 							  </b-card-header>
 							  
@@ -85,12 +92,26 @@ export default {
    company_code: {},
    userList: {},
    deleteId: {},
-   notFount: ''
-
+   notFount: '',
+   user: {
+	   selected: null,
+	   search: '',
+	   company: '',
+	   type:2
+	   }
+   
   }
  },
  created() {
   this.getAllLawyers();
+ },
+ mounted() {
+	 var app = this;
+	 if(app.$route.query.search) {
+	  app.user.search = app.$route.query.search;
+	  app.user.selected = app.$route.query.select;
+	  app.onChangeValue(app.user);
+  }
  },
  methods: {
   deleteUser: function(e) {
@@ -131,6 +152,7 @@ export default {
    app.axios.post('/api/user/userlist', app.company_code)
     .then(function(resp) {
      if (resp.data.status == true) {
+		 console.log(resp.data.response);
       app.userList = resp.data.response;
      } else {
       app.notFount = resp.data.messages.join();
@@ -165,11 +187,42 @@ export default {
       });
      });
    }
+  },
+  //onchange get value
+  onChangeValue: function(users) { 
+   var app = this;
+   var userData = '';
+   
+   var getCompany = JSON.parse(localStorage.getItem('user'));
+   app.user.company = getCompany.company.id;
+   
+   if(users) {
+	    userData = users;
+   }else {
+	   userData = app.user;
+   }
+   app.$router.push({query : {search:app.user.search, select:  app.user.selected} });
+   
+   app.axios.post('/api/user/filter_record', userData)
+     .then(function(resp) {
+		  if (resp.data.status == true) {
+		  app.notFount = '';
+	      app.userList = resp.data.response;
+	     }else{
+		  app.notFount = resp.data.messages.join();
+		 }
+	   
+     }).catch(function(resp) {
+      app.$notify({
+       text: resp.message,
+       type: 'error',
+       duration: 1000,
+       speed: 3000
+      });
+     });
   }
-
  }
 }
-
 </script>
 <style>
 a.btn.btn-custom-info {

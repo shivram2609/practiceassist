@@ -1160,7 +1160,7 @@ margin: 0;
     float: left;
     font-size: 20px;
 }
-.layer-client .sort-by button.btn.btn-primary {
+.layer-client .sort-by select {
       background-color: transparent;
     color: #000;
     border: 2px solid #707070;
@@ -1168,9 +1168,61 @@ margin: 0;
     width: 200px;
      padding: 6px 0 8px 10px;
     text-align: left;
-    font-size: 24px;
-	    font-weight: 500;
+    font-size: 18px;
+	font-weight: 500;
+	height: 52px;
 }
+
+.sort-by .select {
+  font-size: 16px;
+  position: relative;
+  display: inline-block;
+}
+.sort-by .select select {
+outline: none;
+-webkit-appearance: none;
+display: block;
+margin: 0;
+transition: border-color 0.2s;
+border: 2px solid #707070;
+background: #fff;
+color: #555;
+line-height: normal;
+font-family: inherit;
+font-size: inherit;
+width: 200px;
+padding: 13px 0 14px 10px;
+border-radius: 0;
+	text-overflow: ellipsis;
+}
+.sort-by .select .arr {
+  background: transparent;
+  bottom: 5px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 50px;
+  pointer-events: none;
+}
+
+
+.sort-by .select .arr:before {
+ content: '';
+position: absolute;
+top: 38%;
+right: 8px;
+margin-top: -5px;
+pointer-events: none;
+border-top: 11px solid #707070;
+border-left: 8px solid transparent;
+border-right: 8px solid transparent;
+}
+.sort-by .sorting-list{
+	background-color: #e3e3e3;
+	text-overflow: ellipsis
+		
+}
+
 .layer-client .sort-by .dropdown-toggle::after {
         text-align: right;
     float: right;

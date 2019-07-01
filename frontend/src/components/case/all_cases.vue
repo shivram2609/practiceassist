@@ -31,6 +31,9 @@
 											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
 												<p>{{user.title}}</p>
+												<router-link class="pull-right" :to="{path:'/cases/edit',query:{id:user.id}}">Edit</router-link>
+												<span class="pull-right" @click="deleteCase(user.id , index)">Delete</span>
+												<span class="pull-right" @click="archiveCase(user.id , index)">Archive</span>
 												</b-button>
 											  </b-card-header>
 						
@@ -38,7 +41,7 @@
 													<b-card-body class="background-change">
 													  <b-card-text>
 														
-														  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+														  <p>{{user.description}}</p>
 														  <h3>Hearing  Date &amp; Time</h3>
 														  <ul class="check-date-time">
 																<li><a href="#"><span><i class="fa fa-clock-o" aria-hidden="true"></i></span>11:00 PM</a>

@@ -103,7 +103,7 @@
 	    case_time: new Date()
 	   },
 	   options: {
-	    format: 'YYYY/MM/DD h:mm:ss',
+	    format: 'YYYY-MM-DD h:mm:ss',
 	    useCurrent: false,
 	    showClear: true,
 	    showClose: true,

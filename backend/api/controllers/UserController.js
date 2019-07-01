@@ -12,7 +12,7 @@ module.exports = {
   if (req.param('type') == 0) {
    var user = {
     name: req.param('name'),
-    company_code: uuidv1()
+    code: uuidv1()
    }
 
   } else {
@@ -22,11 +22,11 @@ module.exports = {
     email: req.param('email'),
     password: req.param('password'),
     type: req.param('type'),
-    //package_id: req.param('package_id'),
-    company_code: req.param('company_code'),
-    confirmation_token: req.param('company_code') ? 1 : uuidv1(),
-    is_email_confirmed: req.param('company_code') ? 1 : 0,
-    status: req.param('company_code') ? 1 : 0
+    package_id: req.param('package_id'),
+    confirmation_token: req.param('company') ? 1 : uuidv1(),
+    is_email_confirmed: req.param('company') ? 1 : 0,
+    status: req.param('company') ? 1 : 0,
+    company: req.param('company') ? req.param('company') : 0
    
    }
 
@@ -37,13 +37,13 @@ module.exports = {
    var companyDetails = await Companies.create(user).fetch();
 
    var companyDetail = {
-    company_id: companyDetails.id,
+    company: companyDetails.id,
     name: companyDetails.name,
     email: req.param('email'),
     password: req.param('password'),
     type: req.param('type'),
     confirmation_token: uuidv1(),
-    //package_id: req.param('package_id')
+    package_id: req.param('package_id')
    }
 
    //~ //create user
@@ -243,7 +243,7 @@ module.exports = {
 
   Users.findOne({
    email: email
-  }).then(function(user) {
+  }).populate('company').then(function(user) {
    return Users.comparePassword(password, user).then(function(valid) {
     if (!valid) throw new Error('Invalid Password');
 
@@ -281,11 +281,10 @@ module.exports = {
  get_users: async function(req, res) {
   var getCode = req.param('cCode');
   var type = req.param('type');
-  var UsersList = await Users.find({
-   company_code: getCode
-  }).where({
-   'type': type
-  });
+  
+  var UsersList = await Users.find({company_code: getCode}).where({'type': type});
+  
+  console.log(UsersList);
   if (UsersList.length > 0) {
    return res.json({
     status: true,
@@ -472,6 +471,37 @@ module.exports = {
      response: packagesList,
      messages: []
     });
+  },
+  //filter data
+  filter_record: async function(req , res) {
+	var search = req.param('search');
+	var companyId = req.param('company');
+	var search = req.param('search');
+	var type = req.param('type');
+	
+	if(req.param('search') == 'all') { 
+		var sortData = await Users.find({}).where({ company: companyId, type: type });
+	}else if(req.param('search') == 'case') {
+		var sortData = await Users.find({ where: { name: { contains: search }, company: companyId, type: type } })
+	.sort([{ name: 'ASC' }]);	
+	}else{
+		var sortData = await Users.find({ where: { name: { contains: search }, company: companyId, type: type } })
+	.sort([{ name: 'ASC' }]);	
+	}
+	
+	if(sortData.length > 0 ) {
+	return res.json({
+     status: true,
+     response: sortData,
+     messages: []
+    });  
+	}else {
+		return res.json({
+		 status: false,
+		 response: sortData,
+		 messages: ['No record found!']
+		});  	
+	}
   }
 
 }

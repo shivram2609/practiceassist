@@ -68,7 +68,7 @@ export default {
     password: '',
     confirmPassword: '',
     type: 3,
-    company_code: ''
+    company: ''
    },
    submitStatus: false
   }
@@ -118,7 +118,7 @@ export default {
    if (!app.$v.$invalid) {
     var getCode = JSON.parse(localStorage.getItem('user'));
     if (getCode) {
-     app.user.company_code = getCode.company_code;
+     app.user.company = getCode.company.id;
     }
 
     app.axios.post('/api/user/register', app.user)
@@ -130,7 +130,12 @@ export default {
        duration: 1000,
        speed: 3000
       });
-      app.$router.push('/clients');
+       if (resp.data.status == true) {
+	      app.$router.push('/clients');
+	     }else{
+			 return;
+		 }
+      
 
      }).catch(function(resp) {
       app.$notify({

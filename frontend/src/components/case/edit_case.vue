@@ -1,83 +1,81 @@
 <template>
-	<div class="container-fluid">
-				
-        <div class="col-md-11">
-            <div class="card">
-					<div class="card-header">
-						<h3>Edit Case</h3>
-					</div>
-					<div class="card-body">
-						<form  class="register-from needs-validation" novalidate @submit="updateCase">
-				
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                            <div class="col-md-6">
-                                <input id="name" type="text"  :class="{'is-invalid': $v.user.title.$error || submitStatus == true}" v-model="$v.user.title.$model" class="form-control" name="title">
+	
+	
+ <div class="container-fluid">
+	<div class="add-cases">
+		<div class="add-new-cases text-center">
+			<h2>Add New Case BY Lawyer</h2>
+		</div>
+		<div class="col-lg-8 offset-lg-2">
+			<form class="register-from needs-validation" novalidate @submit="updateCase">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-group no-label">
+							<label for="usr">Name:</label>
+							 <input id="name" placeholder="Name" type="text"  :class="{'is-invalid': $v.user.title.$error || submitStatus == true}" v-model="$v.user.title.$model" class="form-control" name="title">
                                 <div  class="invalid-feedback text-left" v-if="!$v.user.title.required">Please enter case title.</div>
                                 <div class="invalid-feedback text-left" v-if="!$v.user.title.minLength">Name must have at least {{ $v.user.title.$params.minLength.min }} characters.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.title.maxLength">Name must have at max {{ $v.user.title.$params.maxLength.max }} characters.</div>
-                               
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">Description</label>
-
-                            <div class="col-md-6">
-                                <textarea class="form-control" :class="{'is-invalid': $v.user.description.$error || submitStatus == true}" v-model="$v.user.description.$model"  placeholder="add multiple lines"></textarea>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-group no-label">
+							<label for="comment">Comment:</label>
+							<textarea class="form-control" :class="{'is-invalid': $v.user.description.$error || submitStatus == true}" v-model="$v.user.description.$model"  placeholder="Description"></textarea>
                                  <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter description.</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Select Client</label>
-
-                            <div class="col-md-6" >
-                                <select class="form-control" :class="{'is-invalid': $v.user.client_id.$error || submitStatus == true}" v-model="$v.user.client_id.$model">
-								  <option disabled value="">Please select one</option>
-								 <template v-for="client, index in allClientsLists">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="select-client">
+							<label for="comment">Select Client</label>
+							<div class="dropdown">
+								  <select class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.client_id.$error || submitStatus == true}" v-model="$v.user.client_id.$model">
+								  <option disabled value="">Select Client</option>
+								  <template v-for="client, index in allClientsLists">
 									  <option  :value="client.id">{{client.name}}</option>
 								  </template>
+								  
 								</select>
 								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter client.</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Select Lawyer</label>
-
-                            <div class="col-md-6">
-                                 <select multiple class="form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
-								  <option disabled value="">Please select one</option>
-								 <template v-for="lawyer, index in allLawyersLists">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="select-client">
+							<label for="comment">Select Lawyer</label>
+							<div class="dropdown">
+								  <select multiple class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
+								  <option disabled value="">Select Lawyer</option>
+								  <template v-for="lawyer, index in allLawyersLists">
 									  <option  :value="lawyer.id">{{lawyer.name}}</option>
 								  </template>
 								</select>
 								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter lawyer One or Multiple.</div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">Case Date</label>
-
-                            <div class="col-md-6">
-                               <date-picker v-model="$v.user.case_time.$model" :config="options"></date-picker>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-						<button class="btn btn-primary" type="submit">Update</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group select-client">
+							<label for="usr">Case Date</label>
+							<date-picker v-model="$v.user.case_time.$model" :config="options"></date-picker>
+					
+						</div>
+					</div>
+			
+				
+				</div>
+				<div class="save-btn text-center">
+					<button type="submit" class="btn btn-primary">Update</button>
 						<router-link class="btn btn-primary" to="/cases">Back</router-link>
-                            </div>
-                        </div>
-                    </form>
-                    </div>
-			</div>
-        </div>
-        
-        
-    </div>
-  
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
 </template>
 <script>
 import {
@@ -104,7 +102,7 @@ export default {
     case_time: new Date()
    },
    options: {
-    format: 'YYYY/MM/DD h:mm:ss',
+    format: 'YYYY-MM-DD h:mm:ss',
     useCurrent: false,
     showClear: true,
     showClose: true,

@@ -7,7 +7,7 @@
 
 module.exports = {
 
- create: function(req, res) {
+ create:  function(req, res) {
   var user = {
    title: req.param('title'),
    description: req.param('description'),
@@ -15,17 +15,18 @@ module.exports = {
    case_time: req.param('case_time')
   }
 
+	
+  var lawyersIDs = req.param('lawyer_id');
 
-  //var lawyersIDs = { lawyer_id: req.param('lawyer_id') }
-
-
-  //~ Case_lawyers.createEach([lawyersIDs]).exec(function (err, user) {
-  //~ if (err) return res.serverError(err);
-  //~ sails.log(user)
-  //~ })
 
   //create case
-  Cases.create(user).then(function() {
+  Cases.create(user).fetch().then(function(cases) {
+	var caseLayers=[];
+	lawyersIDs.forEach(function(lawyer) {
+		caseLayers.push({lawyer:lawyer,case:cases.id});
+	});
+	return CaseLawyers.createEach(caseLayers);
+  }).then(function(caseLawyers){
    return res.json({
     status: true,
     response: {},
@@ -39,7 +40,8 @@ module.exports = {
    });
   })
  },
- //get user listing
+ 
+ //get case listing
  get_cases: async function(req, res) {
   var casesList =
   await Cases.find({}).where({

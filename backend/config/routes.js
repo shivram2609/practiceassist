@@ -40,7 +40,8 @@ module.exports.routes = {
   'post /api/user/delete_user': 'UserController.delete_user',
   'post /api/user/update_password': 'UserController.update_password',
   'post /api/user/update_status': 'UserController.update_status',
-  'get /api/user/get_packages': 'UserController.get_packages',
+  'get  /api/user/get_packages': 'UserController.get_packages',
+  'post /api/user/filter_record': 'UserController.filter_record',
   
   
   'post /api/case/add_case': 'CasesController.create',

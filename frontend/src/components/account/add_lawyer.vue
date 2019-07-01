@@ -68,7 +68,7 @@ export default {
     password: '',
     confirmPassword: '',
     type: 2,
-    company_code: ''
+    company: ''
    },
    submitStatus: false
   }
@@ -118,19 +118,24 @@ export default {
    if (!app.$v.$invalid) {
     var getCode = JSON.parse(localStorage.getItem('user'));
     if (getCode) {
-     app.user.company_code = getCode.company_code;
+     app.user.company = getCode.company.id;
     }
 
     app.axios.post('/api/user/register', app.user)
      .then(function(resp) {
-
+	  
       app.$notify({
        text: resp.data.messages.join(),
        type: resp.data.status ? 'success' : 'error',
        duration: 1000,
        speed: 3000
       });
-      app.$router.push('/lawyers');
+     if (resp.data.status == true) {
+	      app.$router.push('/lawyers');
+	     }else{
+			 return;
+		 }
+      
 
      }).catch(function(resp) {
       app.$notify({
