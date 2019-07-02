@@ -18,7 +18,7 @@
 						<a href="javascript:void(0)" class="menu"><span>Clients</span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled" style="">
 								<li><router-link to="/clients">All Clients</router-link></li>
-								<li><router-link to="clients/add">Add Client</router-link></li>
+								<li><router-link to="/clients/add">Add Client</router-link></li>
 							</ul>
 					</li>
 					<li class="submenu">

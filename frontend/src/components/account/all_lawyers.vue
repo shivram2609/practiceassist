@@ -18,9 +18,8 @@
 						<b-form-select v-model="user.selected" class="mb-3">
 						  <option class="sorting-list" disabled :value="null">Select</option>
 						  <option class="sorting-list" value="name">Name</option>
-						  <option class="sorting-list" value="case">Case Name</option>
-						  <!--option class="sorting-list" value="date">Next Hearing Date</option-->
-						   <option class="sorting-list" value="all">All</option>
+						  <!--option class="sorting-list" value="case">Case Name</option>
+						  <option class="sorting-list" value="date">Next Hearing Date</option-->
 						</b-form-select>
 					</div>
 				</div>
@@ -30,11 +29,13 @@
 						<button class="btn btn-default" type="button" @click="onChangeValue()"><i class="fa fa-search"></i></button></span>
 					</div>
 				</div>
+				<template v-if="getClear == true"><span @click="getAll()" class="btn btn-primary">Clear</span></template>
 			</form>
 			</div>
 		</div>
 		<div class="col-md-8 offset-md-2">
 			<div class="layer-name">
+				
 				<div id="accordion" class="accordion">
 					<div class="mb-0">
 					
@@ -42,6 +43,7 @@
 							<b-alert show variant="warning" class="text-center">{{notFount}}</b-alert>
 						</template>
 						<template v-else>
+					
 							<b-card no-body class="mb-1" v-for="user, index in userList" v-bind:index="user.id">
 							  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 								<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
@@ -53,29 +55,30 @@
 								<span class="pull-right" @click="deleteUser(user.id , index)">Delete</span>
 								</b-button>
 							  </b-card-header>
-							  
+								<b-collapse  :id="'accordion-'+ index"   accordion="my-accordion" role="tabpanel">
 									
-								<b-collapse visible :id="'accordion-'+ index"   accordion="my-accordion" role="tabpanel">
-								<b-card-body class="background-change">
-								  <b-card-text>
-									  <div class="client-img"><img src="img/client-img-icon.png" class="img-fluid"></div>
-								  </b-card-text>
-								  <b-card-text>
-									<ul class="client-name-tittle">
-										<li><a href="#">Lawyer Name:<span> Kodwo</span></a></li>
-										<li><a href="#">Case Tilte:<span> Property Settlement</span></a></li>
-										<li><a href="#">Case Description:<span> A Property invoice the Property that the couple</span></a></li>
-								   </ul>
-								   <ul class="client-activities">
-										<li><a href="#">All Activities</a></li>
-										<li><a href="#">All Cases</a></li>
-										<li><a href="#">All Invoices </a></li>
-										<li><a href="#">Calendar</a></li>
-								   </ul>
-								  </b-card-text>
-								</b-card-body>
+									<b-card-body class="background-change">
+									  <b-card-text>
+										  <div class="client-img"><img src="img/client-img-icon.png" class="img-fluid"></div>
+									  </b-card-text>
+									  <b-card-text>
+										<ul class="client-name-tittle">
+											<li><a href="#">Lawyer Name:<span> {{user.name}}</span></a></li>
+											<li><a href="#">Case Tilte:<span v-if="user.case[0]"> {{user.case[0].title}}</span></a></li>
+											<li><a href="#">Case Description:<span v-if="user.case[0]"> {{user.case[0].description}}</span></a></li>
+									   </ul>
+									   <ul class="client-activities">
+											<li><a href="#">All Activities</a></li>
+											<li><a href="#">All Cases</a></li>
+											<li><a href="#">All Invoices </a></li>
+											<li><a href="#">Calendar</a></li>
+									   </ul>
+									  </b-card-text>
+									</b-card-body>
+									
 							  </b-collapse>
-						</b-card>
+							</b-card>
+							
 						</template>
 					</div>
 				</div>
@@ -88,7 +91,7 @@
 export default {
  data() {
   return {
-
+   getClear: false,
    company_code: {},
    userList: {},
    deleteId: {},
@@ -99,7 +102,6 @@ export default {
 	   company: '',
 	   type:2
 	   }
-   
   }
  },
  created() {
@@ -151,8 +153,8 @@ export default {
    };
    app.axios.post('/api/user/userlist', app.company_code)
     .then(function(resp) {
-     if (resp.data.status == true) {
-		 console.log(resp.data.response);
+     if (resp.data.status == true) { 
+	
       app.userList = resp.data.response;
      } else {
       app.notFount = resp.data.messages.join();
@@ -169,7 +171,6 @@ export default {
    if (confirm("Do you really want to update?")) {
     app.axios.post('/api/user/update_status', statusCode)
      .then(function(resp) {
-
       app.getAllLawyers();
       app.$notify({
        text: resp.data.messages.join(),
@@ -192,17 +193,15 @@ export default {
   onChangeValue: function(users) { 
    var app = this;
    var userData = '';
-   
    var getCompany = JSON.parse(localStorage.getItem('user'));
    app.user.company = getCompany.company.id;
-   
    if(users) {
 	    userData = users;
    }else {
 	   userData = app.user;
    }
    app.$router.push({query : {search:app.user.search, select:  app.user.selected} });
-   
+   app.getClear = true;
    app.axios.post('/api/user/filter_record', userData)
      .then(function(resp) {
 		  if (resp.data.status == true) {
@@ -211,7 +210,6 @@ export default {
 	     }else{
 		  app.notFount = resp.data.messages.join();
 		 }
-	   
      }).catch(function(resp) {
       app.$notify({
        text: resp.message,
@@ -220,6 +218,14 @@ export default {
        speed: 3000
       });
      });
+  },
+  getAll: function() {
+	  var app =this;
+	  app.user = {selected: null , search: ''}
+	  app.$router.push('/lawyers');
+	  app.getClear = false;
+	  app.notFount = '';
+	  app.getAllLawyers();
   }
  }
 }
@@ -229,4 +235,9 @@ a.btn.btn-custom-info {
     background-color: #012b58;
     color: #fff;
 }
+ .collapsed > .when-opened,
+    :not(.collapsed) > .when-closed {
+        display: none;
+    }
+
 </style>

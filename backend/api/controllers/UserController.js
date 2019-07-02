@@ -282,9 +282,35 @@ module.exports = {
   var getCode = req.param('cCode');
   var type = req.param('type');
   
-  var UsersList = await Users.find({company_code: getCode}).where({'type': type});
+  var UsersList = await Users.find({company_code: getCode})
+  .populate('case')
+  .where({'type': type});
   
-  console.log(UsersList);
+  if (UsersList.length > 0) {
+   return res.json({
+    status: true,
+    response: UsersList,
+    messages: []
+   });
+  } else {
+   return res.json({
+    status: false,
+    response: UsersList,
+    messages: ['No records found!']
+   });
+  }
+
+ },
+ //get clients listing
+ get_clients: async function(req, res) {
+  var getCode = req.param('cCode');
+  var type = req.param('type');
+  
+  var UsersList = await Users.find({company_code: getCode})
+  .populate('cases')
+  .where({'type': type});
+  
+  
   if (UsersList.length > 0) {
    return res.json({
     status: true,
@@ -406,8 +432,21 @@ module.exports = {
 	    var uName = req.param('name');
 		var uEmail = req.param('email');
 	
+	 	req.file('image').upload({
+		  dirname: require('path').resolve(sails.config.appPath, 'assets/images')
+		},function (err, uploadedFiles) {
+			uploadedFiles.forEach(function(value) {
+					Users.updateOne({ id: access_verify.id}).set({  image: value.fd
+		 }).then(function() { });
+			});
+		
+			
+		 
+		});
+		
 	  Users.updateOne({ id: access_verify.id}).set({  name: uName
 		 }).then(function(user) {
+		
 		  return res.json({
 		   status: true,
 		   response: user,

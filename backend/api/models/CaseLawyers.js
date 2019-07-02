@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
 	  
 	  lawyer:{ model: 'users' },
-	  cases:{ model: 'cases' },
+	  case:{ model: 'cases' },
 
 	 
   },

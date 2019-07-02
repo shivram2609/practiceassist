@@ -47,7 +47,7 @@
 						<div class="select-client">
 							<label for="comment">Select Lawyer</label>
 							<div class="dropdown">
-								  <select multiple class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
+								  <select multiple class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.lawyer.$error || submitStatus == true}" v-model="$v.user.lawyer.$model">
 								  <option disabled value="">Select Lawyer</option>
 								  <template v-for="lawyer, index in allLawyersLists">
 									  <option  :value="lawyer.id">{{lawyer.name}}</option>
@@ -99,7 +99,7 @@
 	    title: '',
 	    description: '',
 	    client_id: '',
-	    lawyer_id: [],
+	    lawyer: [],
 	    case_time: new Date()
 	   },
 	   options: {
@@ -134,7 +134,7 @@
 	    required
 
 	   },
-	   lawyer_id: {
+	   lawyer: {
 	    required
 
 	   },

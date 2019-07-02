@@ -19,7 +19,6 @@
 						  <option class="sorting-list" value="name">Name</option>
 						  <!--option class="sorting-list" value="case">Case Name</option>
 						  <option class="sorting-list" value="date">Next Hearing Date</option-->
-						   <option class="sorting-list" value="all">All</option>
 						</b-form-select>
 					</div>
 				</div>
@@ -29,6 +28,8 @@
 						<button class="btn btn-default" type="button" @click="onChangeValue()"><i class="fa fa-search"></i></button></span>
 					</div>
 				</div>
+				
+				<template v-if="getClear == true"><span @click="getAll()" class="btn btn-primary">Clear</span></template>
 			</form>
 			</div>
 		</div>
@@ -52,25 +53,27 @@
 								<span class="pull-right"  @click="deleteUser(user.id, index)">Delete</span>
 								</b-button>
 							  </b-card-header>
-								<b-collapse visible :id="'accordion-'+ index"   accordion="my-accordion" role="tabpanel">
-								<b-card-body class="background-change">
-								  <b-card-text>
-									  <div class="client-img"><img src="img/client-img-icon.png" class="img-fluid"></div>
-								  </b-card-text>
-								  <b-card-text>
-									<ul class="client-name-tittle">
-										<li><a href="#">Lawyer Name:<span> Kodwo</span></a></li>
-										<li><a href="#">Case Tilte:<span> Property Settlement</span></a></li>
-										<li><a href="#">Case Description:<span> A Property invoice the Property that the couple</span></a></li>
-								   </ul>
-								   <ul class="client-activities">
-										<li><a href="#">All Activities</a></li>
-										<li><a href="#">All Cases</a></li>
-										<li><a href="#">All Invoices </a></li>
-										<li><a href="#">Calendar</a></li>
-								   </ul>
-								  </b-card-text>
-								</b-card-body>
+								<b-collapse :id="'accordion-'+ index"   accordion="my-accordion" role="tabpanel">
+									
+									<b-card-body class="background-change" >
+									  <b-card-text>
+										  <div class="client-img"><img src="img/client-img-icon.png" class="img-fluid"></div>
+									  </b-card-text>
+									  <b-card-text>
+										<ul class="client-name-tittle">
+											<li><a href="#">Lawyer Name:<span> Kodwo</span></a></li>
+											<li><a href="#">Case Tilte:<span v-if="user.cases[0]"> {{user.cases[0].title}}</span></a></li>
+											<li><a href="#">Case Description:<span v-if="user.cases[0]"> {{user.cases[0].description}}</span></a></li>
+									   </ul>
+									   <ul class="client-activities">
+											<li><a href="#">All Activities</a></li>
+											<li><a href="#">All Cases</a></li>
+											<li><a href="#">All Invoices </a></li>
+											<li><a href="#">Calendar</a></li>
+									   </ul>
+									  </b-card-text>
+									</b-card-body>
+									
 							  </b-collapse>
 						</b-card>
 						</template>
@@ -88,7 +91,7 @@
 export default {
  data() {
   return {
-
+   getClear: false,
    company_code: {},
    userList: {},
    deleteId: {},
@@ -148,7 +151,7 @@ export default {
     cCode: getCode.company_code,
     type: 3
    };
-   app.axios.post('/api/user/userlist', app.company_code)
+   app.axios.post('/api/user/clientlist', app.company_code)
     .then(function(resp) {
      if (resp.data.status == true) {
       app.userList = resp.data.response;
@@ -194,7 +197,7 @@ export default {
    
    var getCompany = JSON.parse(localStorage.getItem('user'));
    app.user.company = getCompany.company.id;
-   
+    app.getClear = true;
    if(users) {
 	    userData = users;
    }else {
@@ -219,6 +222,14 @@ export default {
        speed: 3000
       });
      });
+  },
+  getAll: function() {
+	  var app =this;
+	  app.user = {selected: null , search: ''}
+	  app.$router.push('/clients');
+	  app.getClear = false;
+	  app.notFount = '';
+	  app.getAllLawyers();
   }
 
  }

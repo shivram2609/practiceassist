@@ -35,6 +35,7 @@ module.exports.routes = {
   'post /api/user/forgot_password': 'UserController.forgot_password',
   'post /api/user/change_password': 'UserController.change_password',
   'post /api/user/userlist': 'UserController.get_users',
+  'post /api/user/clientlist': 'UserController.get_clients',
   'post /api/user/edit_user': 'UserController.edit_user',
   'post /api/user/update_user': 'UserController.update_user',
   'post /api/user/delete_user': 'UserController.delete_user',

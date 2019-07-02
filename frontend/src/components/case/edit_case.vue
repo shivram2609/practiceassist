@@ -46,13 +46,14 @@
 						<div class="select-client">
 							<label for="comment">Select Lawyer</label>
 							<div class="dropdown">
-								  <select multiple class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.lawyer_id.$error || submitStatus == true}" v-model="$v.user.lawyer_id.$model">
+						
+								  <select multiple class="btn btn-primary dropdown-toggle form-control" v-model="user.lawyer">
 								  <option disabled value="">Select Lawyer</option>
-								  <template v-for="lawyer, index in allLawyersLists">
-									  <option  :value="lawyer.id">{{lawyer.name}}</option>
+								  <template v-for="lawyers, index in allLawyersLists">
+									  <option  :value="lawyers.id">{{lawyers.name}}</option>
 								  </template>
 								</select>
-								 <div  class="invalid-feedback text-left" v-if="!$v.user.description.required">Please enter lawyer One or Multiple.</div>
+		
 							</div>
 						</div>
 					</div>
@@ -98,7 +99,7 @@ export default {
     title: '',
     description: '',
     client_id: '',
-    lawyer_id: [],
+    lawyer: [],
     case_time: new Date()
    },
    options: {
@@ -149,12 +150,14 @@ export default {
   app.userId = {
    uid: this.$route.query.id
   }
-
   app.axios.post('/api/case/edit_case', app.userId)
    .then(function(resp) {
-    app.user = resp.data.response;
+   app.user = resp.data.response;
+   resp.data.response.lawyer.forEach(function(key, value){
+    app.user.lawyer[value] = key.id; 
+})
    }).catch(function(resp) {
-    console.log(resp);
+    
    });
 
   app.getAllClients();
@@ -167,9 +170,7 @@ export default {
    event.preventDefault();
 
    var app = this;
-
-   if (!app.$v.$invalid) {
-
+   
     app.axios.post('/api/case/update_case', app.user)
      .then(function(resp) {
       app.$notify({
@@ -178,7 +179,7 @@ export default {
        duration: 1000,
        speed: 3000
       });
-      app.$router.push('all_cases');
+      app.$router.push('/cases');
      }).catch(function(resp) {
       app.$notify({
        text: resp.message,
@@ -188,7 +189,7 @@ export default {
       });
      });
 
-   }
+   
 
   },
 
@@ -208,8 +209,8 @@ export default {
 
     }).catch(function(resp) {});
   },
+  
   getAllLawyers: function() {
-
    var app = this;
    var getCode = JSON.parse(localStorage.getItem('user'));
    app.company_code = {

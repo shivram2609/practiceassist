@@ -17,17 +17,19 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
-			
 				<div class="all-client-tabs">
-					
-		
 					<b-tabs>
 					  <b-tab title="Active Cases">
 						<b-card-text>
 							<div id="active-cases" class="tab-pane fade active show">
 								<div class="layer-name">
 									<div id="accordion" class="accordion">
+										<template v-if="notFound">
+											<b-alert show variant="warning" class="text-center">{{notFound}}</b-alert>
+										</template>
+										<template v-else>
 										<b-card no-body class="mb-1" v-for="user, index in caseList">
+											<template v-if="user.is_archived == 0">
 											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
 												<p>{{user.title}}</p>
@@ -37,7 +39,7 @@
 												</b-button>
 											  </b-card-header>
 						
-												<b-collapse :id="'accordion-'+ index" visible accordion="my-accordion" role="tabpanel">
+												<b-collapse :id="'accordion-'+ index" accordion="my-accordion" role="tabpanel">
 													<b-card-body class="background-change">
 													  <b-card-text>
 														
@@ -55,7 +57,9 @@
 													  </b-card-text>
 													</b-card-body>
 												  </b-collapse>
+												  </template>
 											</b-card>
+											</template>
 									</div>
 								</div>
 							</div>
@@ -68,14 +72,20 @@
 							<div id="active-cases" class="tab-pane fade active show">
 								<div class="layer-name">
 									<div id="accordion" class="accordion">
+									
+										<template v-if="notFound">
+											<b-alert show variant="warning" class="text-center">{{notFound}}</b-alert>
+										</template>
+										<template v-else>
 										<b-card no-body class="mb-1" v-for="user, index in caseList">
+											<template v-if="user.is_archived == 1">
 											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
 												<p>{{user.title}}</p>
 												</b-button>
 											  </b-card-header>
 						
-												<b-collapse :id="'accordion-'+ index" visible accordion="my-accordion" role="tabpanel">
+												<b-collapse :id="'accordion-'+ index" accordion="my-accordion" role="tabpanel">
 													<b-card-body class="background-change">
 													  <b-card-text>
 														
@@ -93,7 +103,9 @@
 													  </b-card-text>
 													</b-card-body>
 												  </b-collapse>
+												  </template>
 											</b-card>
+											</template>
 									</div>
 								</div>
 							</div>
@@ -116,7 +128,7 @@ export default {
   return {
 
    company_code: {},
-   caseList: {},
+   caseList: '',
    deleteId: {},
    notFound: ''
   }

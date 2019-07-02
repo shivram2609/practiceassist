@@ -16,7 +16,7 @@ module.exports = {
   }
 
 	
-  var lawyersIDs = req.param('lawyer_id');
+  var lawyersIDs = req.param('lawyer');
 
 
   //create case
@@ -44,9 +44,7 @@ module.exports = {
  //get case listing
  get_cases: async function(req, res) {
   var casesList =
-  await Cases.find({}).where({
-   'is_archived': false
-  });
+  await Cases.find({});
   if (casesList.length > 0) {
   return res.json({
    status: true,
@@ -78,7 +76,7 @@ module.exports = {
   var getId = req.param('uid');
   var UsersList = await Cases.findOne({
    id: getId
-  });
+  }).populate('lawyer');
   return res.json({
    status: true,
    response: UsersList,
@@ -87,11 +85,10 @@ module.exports = {
 
  },
 
- //uupdate user edit_user
+ //update case 
  update_case: function(req, res) {
 
   var uid = req.param('id');
-
 
   var getAll = {
    client_id: req.param('client_id'),
@@ -106,9 +103,24 @@ module.exports = {
    is_archived: req.param('is_archived')
   }
 
+  //delete all rows from caselawyers table
+  CaseLawyers.destroy({ case : uid }).then(function() {
+	  });	 
+	   
   Cases.updateOne({
    id: uid
   }).set(getAll).then(function() {
+	  
+	 //update caselawyers with new data
+	  var lawyersIDs = req.param('lawyer');
+	  	var caseLayers=[];
+	lawyersIDs.forEach(function(lawyer) {
+		caseLayers.push({ lawyer : lawyer, case : uid });
+	});
+
+	return CaseLawyers.createEach(caseLayers);
+	  
+	 }).then(function(caseLayers){ 
    return res.json({
     status: true,
     response: {},

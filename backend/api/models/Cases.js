@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
 	  
-			client_id: { type: 'number', columnType: 'integer', required: true },
+			client_id: { model: 'Users' },
 			company: { type: 'number', columnType: 'integer', required: false},
 			title: { type: 'string', minLength: 6, maxLength: 50, required: true },
 			description: { type: 'string', required: true},
@@ -19,7 +19,8 @@ module.exports = {
 			judge_name: { type: 'string', allowNull: true },
 			file_number: { type: 'string', allowNull: true},
 			is_archived: { type: 'boolean', defaultsTo: false},
-			lawyers: { collection: 'users', via: 'cases', through : 'caselawyers' }
+			lawyer: { collection: 'Users', via: 'case', through: 'caselawyers' },
+			
   }
 
 };

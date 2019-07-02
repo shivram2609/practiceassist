@@ -24,8 +24,9 @@ module.exports = {
 	reset_token: { type: 'string', allowNull: true},
 	price: { type: 'number', columnType: 'float', allowNull: true},
 	package_id: { type: 'number', columnType: 'integer', required: false},
-	company: {  model: 'companies'  },
-	cases: { collection: 'cases', via: 'lawyer', through : 'caselawyers' }
+	company: { model: 'companies' },
+	cases: { collection: 'Cases', via: 'client_id' },
+	case: { collection: 'Cases', via:'lawyer' , through: 'caselawyers' }
 	
 	
     
