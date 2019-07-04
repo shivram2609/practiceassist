@@ -126,20 +126,19 @@ mounted(){
 	
 	  localStorage.setItem('user', JSON.stringify(resp.data.response));
 	  app.$router.go()
-      app.$notify({
-       text: resp.data.messages.join(),
-       type: resp.data.status ? 'success' : 'error',
-       duration: 1000,
-       speed: 2000
-      });
+      //~ app.$notify({
+       //~ text: resp.data.messages.join(),
+       //~ type: resp.data.status ? 'success' : 'error',
+       //~ duration: 1000,
+       //~ speed: 2000
+      //~ });
      } else {
-		 console.log('resp.data.response');
-      app.$notify({
-       text: resp.data.messages.join(),
-       type: resp.data.status ? 'success' : 'error',
-       duration: 1000,
-       speed: 2000
-      });
+      //~ app.$notify({
+       //~ text: resp.data.messages.join(),
+       //~ type: resp.data.status ? 'success' : 'error',
+       //~ duration: 1000,
+       //~ speed: 2000
+      //~ });
      }
     }).catch(function(resp) {
      app.$notify({
