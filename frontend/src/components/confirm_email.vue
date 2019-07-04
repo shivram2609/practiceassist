@@ -35,7 +35,7 @@ export default {
   app.confirmEmail = {
    confirm_token: this.$route.query.confirm_token
   }
-  app.axios.post('api/user/confirm_email', app.confirmEmail)
+  app.axios.post('/api/users/confirm_email', app.confirmEmail)
    .then(function(resp) {
     if (resp.data.status == true) {
      app.successMessage = resp.data.messages.join();

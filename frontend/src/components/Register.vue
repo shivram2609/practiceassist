@@ -254,6 +254,7 @@ export default {
     app.axios.post('/api/users/create', app.user)
      .then(function(resp) {
 	  //app.user = {name: '' , email:'', password:'',sameAsPassword:''}
+	  if(resp.data.status == true) {
       app.$notify({
        text: resp.data.messages.join(),
        type: resp.data.status ? 'success' : 'error',
@@ -261,6 +262,14 @@ export default {
        speed: 3000
       });
       app.$router.push('/login');
+   }else {
+	    app.$notify({
+       text: resp.data.messages.join(),
+       type: resp.data.status ? 'success' : 'error',
+       duration: 1000,
+       speed: 3000
+      });
+   }
 
      }).catch(function(resp) {
       app.$notify({
