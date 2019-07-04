@@ -8,14 +8,14 @@
                         <form  class="register-from needs-validation" novalidate @submit="updateLawyer">
 							<div class="form-group">
 							  <label for="usr">Name:</label>
-							  <input id="name" type="text" placeholder="Name" v-model="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error || submitStatus == true}" class="form-control" name="name" value="">
+							  <input id="name" type="text" placeholder="Name" v-model="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error }" class="form-control" name="name" value="">
                                 <div  class="invalid-feedback text-left" v-if="!$v.user.name.required">Please enter user name.</div>
                                 <div class="invalid-feedback text-left" v-if="!$v.user.name.minLength">Name must have at least {{ $v.user.name.$params.minLength.min }} characters.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.name.maxLength">Name must have at max {{ $v.user.name.$params.maxLength.max }} characters.</div>
 							</div>
 							<div class="form-group">
 							  <label for="usr">Name:</label>
-							   <input id="email" type="email" placeholder="Email" :class="{'is-invalid': $v.user.email.$error || submitStatus == true}" v-model="$v.user.email.$model" class="form-control" name="email" value="">
+							   <input id="email" type="email" placeholder="Email" :class="{'is-invalid': $v.user.email.$error}" v-model="$v.user.email.$model" class="form-control" name="email" value="">
                                  <div class="invalid-feedback text-left" v-if="!$v.user.email.required">Please enter email.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.email.email">Please enter valid email.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.email.minLength">Email must have at least {{ $v.user.email.$params.minLength.min }} characters.</div>
@@ -24,7 +24,7 @@
 							
 							<div class="form-group">
 							  <label for="pwd">Password:</label>
-							  <input id="password" type="password" placeholder="Password" :class="{'is-invalid': $v.user.password.$error || submitStatus == true}" v-model="$v.user.password.$model" class="form-control" name="password">
+							  <input id="password" type="password" placeholder="Password" :class="{'is-invalid': $v.user.password.$error}" v-model="$v.user.password.$model" class="form-control" name="password">
                                <div class="invalid-feedback text-left" v-if="!$v.user.password.required">Please enter password.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.password.minLength">Password must have at least {{ $v.user.password.$params.minLength.min }} characters.</div>
 								<div class="invalid-feedback text-left" v-if="!$v.user.password.maxLength">Password must have at max {{ $v.user.password.$params.maxLength.max }} characters.</div>
@@ -88,12 +88,12 @@ export default {
  },
  mounted() {
   var app = this;
-  app.userId = { uid: this.$route.query.id }
-console.log(app.userId);
-  app.axios.post('/api/user/edit_user', app.userId)
+  var params = { uid: this.$route.query.id }
+
+  app.axios.get('/api/users/show', {params:params})
    .then(function(resp) {
 
-    app.user = resp.data.response;
+    app.user = resp.data.response.users;
     app.user.password = '';
 
    }).catch(function(resp) {
@@ -109,9 +109,9 @@ console.log(app.userId);
 
    if (!app.$v.$invalid) {
 
+	app.user.uid = this.$route.query.id;
 
-
-    app.axios.post('/api/user/update_user', app.user)
+    app.axios.post('/api/users/update', app.user)
      .then(function(resp) {
 
       app.$notify({

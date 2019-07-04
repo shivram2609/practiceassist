@@ -95,7 +95,7 @@ export default {
     app.submitStatus = true
     return;
    }
-   app.axios.post('api/user/login', app.user)
+   app.axios.post('api/users/login', app.user)
     .then(function(resp) {
 	
      app.$notify({

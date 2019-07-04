@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+
 //vue bootstarp
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
@@ -24,7 +25,6 @@ Vue.config.productionTip = false
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-Vue.use(VueAxios, axios)
 
 //vue vueflashmessage
 import Notifications from 'vue-notification'
@@ -37,6 +37,24 @@ import BackendLayout from "./layouts/backend-layout.vue";
 Vue.component('frontend-layout',FrontendLayout);
 Vue.component('backend-layout',BackendLayout);
 
+axios.interceptors.request.use(
+  (config) => {
+    let token = localStorage.getItem('jwt');
+
+    if (token) {
+      config.headers['Authorization'] = 'Bearer '+token;
+    }
+    return config;
+  }, 
+
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+Vue.use(VueAxios, axios)
+
+
 //axios.defaults.baseURL = process.env.API_BASE_URL;
 
 /* eslint-disable no-new */
@@ -45,9 +63,4 @@ new Vue({
   router:router,
   components: { App },
   template: '<App/>'
-
 })
-
-
-
-

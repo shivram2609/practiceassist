@@ -222,7 +222,7 @@ export default {
  methods: {
   getPackagesList: function() {
    var app = this;
-   	app.axios.get('/api/user/get_packages')
+   	app.axios.get('/api/users/get_packages')
    .then(function(resp) {
      app.packagesList = resp.data.response;
 	   }).catch(function(resp){
@@ -251,7 +251,7 @@ export default {
    }
    
    if (!app.$v.$invalid) {
-    app.axios.post('/api/user/register', app.user)
+    app.axios.post('/api/users/create', app.user)
      .then(function(resp) {
 	  //app.user = {name: '' , email:'', password:'',sameAsPassword:''}
       app.$notify({

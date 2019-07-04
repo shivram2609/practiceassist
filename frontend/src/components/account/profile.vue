@@ -120,12 +120,12 @@ mounted(){
 	formData.append('email',app.user.email);
 	formData.append('user_token',app.user.user_token);
 	
-   app.axios.post('/api/user/update_password', formData,{headers: {'Content-Type': 'multipart/form-data'}})
+   app.axios.post('/api/users/profile_update', formData,{headers: {'Content-Type': 'multipart/form-data'}})
     .then(function(resp) {
      if (resp.data.status === true) {
 	
 	  localStorage.setItem('user', JSON.stringify(resp.data.response));
-	 // app.$router.go()
+	  app.$router.go()
       app.$notify({
        text: resp.data.messages.join(),
        type: resp.data.status ? 'success' : 'error',

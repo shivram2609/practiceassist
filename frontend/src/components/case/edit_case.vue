@@ -4,7 +4,7 @@
  <div class="container-fluid">
 	<div class="add-cases">
 		<div class="add-new-cases text-center">
-			<h2>Add New Case BY Lawyer</h2>
+			<h2>Edit Case</h2>
 		</div>
 		<div class="col-lg-8 offset-lg-2">
 			<form class="register-from needs-validation" novalidate @submit="updateCase">
@@ -31,7 +31,7 @@
 						<div class="select-client">
 							<label for="comment">Select Client</label>
 							<div class="dropdown">
-								  <select class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.client_id.$error || submitStatus == true}" v-model="$v.user.client_id.$model">
+								  <select class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.client.$error || submitStatus == true}" v-model="$v.user.client.$model">
 								  <option disabled value="">Select Client</option>
 								  <template v-for="client, index in allClientsLists">
 									  <option  :value="client.id">{{client.name}}</option>
@@ -47,7 +47,7 @@
 							<label for="comment">Select Lawyer</label>
 							<div class="dropdown">
 						
-								  <select multiple class="btn btn-primary dropdown-toggle form-control" v-model="user.lawyer">
+								  <select multiple class="btn btn-primary dropdown-toggle form-control" v-model="user.lawyers">
 								  <option disabled value="">Select Lawyer</option>
 								  <template v-for="lawyers, index in allLawyersLists">
 									  <option  :value="lawyers.id">{{lawyers.name}}</option>
@@ -98,9 +98,10 @@ export default {
    user: {
     title: '',
     description: '',
-    client_id: '',
-    lawyer: [],
-    case_time: new Date()
+    client: '',
+    lawyers: [],
+    case_time: new Date(),
+    id : ''
    },
    options: {
     format: 'YYYY-MM-DD h:mm:ss',
@@ -129,7 +130,7 @@ export default {
     maxLength: maxLength(50)
 
    },
-   client_id: {
+   client: {
     required
 
    },
@@ -147,14 +148,13 @@ export default {
 
  mounted() {
   var app = this;
-  app.userId = {
-   uid: this.$route.query.id
-  }
-  app.axios.post('/api/case/edit_case', app.userId)
+
+  var params = { uid: this.$route.query.id }
+  app.axios.get('/api/cases/show', {params:params})
    .then(function(resp) {
    app.user = resp.data.response;
-   resp.data.response.lawyer.forEach(function(key, value){
-    app.user.lawyer[value] = key.id; 
+   resp.data.response.lawyers.forEach(function(key, value){
+    app.user.lawyers[value] = key.id; 
 })
    }).catch(function(resp) {
     
@@ -171,7 +171,8 @@ export default {
 
    var app = this;
    
-    app.axios.post('/api/case/update_case', app.user)
+   app.user.id = this.$route.query.id;
+    app.axios.post('/api/cases/update', app.user)
      .then(function(resp) {
       app.$notify({
        text: resp.data.messages.join(),
@@ -196,15 +197,11 @@ export default {
   getAllClients: function() {
 
    var app = this;
-   var getCode = JSON.parse(localStorage.getItem('user'));
-   app.company_code = {
-    cCode: getCode.company_code,
-    type: 3
-   };
-   app.axios.post('/api/user/userlist', app.company_code)
+   var params = {  type: 2 };
+   app.axios.get('/api/users', {params: params})
     .then(function(resp) {
      if (resp.data.status == true) {
-      app.allClientsLists = resp.data.response;
+      app.allClientsLists = resp.data.response.users;
      }
 
     }).catch(function(resp) {});
@@ -212,15 +209,11 @@ export default {
   
   getAllLawyers: function() {
    var app = this;
-   var getCode = JSON.parse(localStorage.getItem('user'));
-   app.company_code = {
-    cCode: getCode.company_code,
-    type: 2
-   };
-   app.axios.post('/api/user/userlist', app.company_code)
+  var params = {  type: 1 };
+   app.axios.get('/api/users', {params: params})
     .then(function(resp) {
      if (resp.data.status == true) {
-      app.allLawyersLists = resp.data.response;
+      app.allLawyersLists = resp.data.response.users;
      }
 
     }).catch(function(resp) {});

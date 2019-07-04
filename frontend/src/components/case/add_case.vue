@@ -5,7 +5,7 @@
  <div class="container-fluid">
 	<div class="add-cases">
 		<div class="add-new-cases text-center">
-			<h2>Add New Case BY Lawyer</h2>
+			<h2>Add New Case</h2>
 		</div>
 		<div class="col-lg-8 offset-lg-2">
 			<form class="register-from needs-validation" novalidate @submit="addCase">
@@ -32,7 +32,8 @@
 						<div class="select-client">
 							<label for="comment">Select Client</label>
 							<div class="dropdown">
-								  <select class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.client_id.$error || submitStatus == true}" v-model="$v.user.client_id.$model">
+						
+								  <select class="btn btn-primary dropdown-toggle form-control" :class="{'is-invalid': $v.user.client.$error || submitStatus == true}" v-model="$v.user.client.$model">
 								  <option disabled value="">Select Client</option>
 								  <template v-for="client, index in allClientsLists">
 									  <option  :value="client.id">{{client.name}}</option>
@@ -98,7 +99,7 @@
 	   user: {
 	    title: '',
 	    description: '',
-	    client_id: '',
+	    client: '',
 	    lawyer: [],
 	    case_time: new Date()
 	   },
@@ -130,7 +131,7 @@
 	    maxLength: maxLength(50)
 
 	   },
-	   client_id: {
+	   client: {
 	    required
 
 	   },
@@ -165,7 +166,7 @@
 	   }
 
 	   if (!app.$v.$invalid) {
-	    app.axios.post('/api/case/add_case', app.user)
+	    app.axios.post('/api/cases/create', app.user)
 	     .then(function(resp) {
 	      app.$notify({
 	       text: resp.data.messages.join(),
@@ -190,15 +191,13 @@
 	  getAllClients: function() {
 
 	   var app = this;
-	   var getCode = JSON.parse(localStorage.getItem('user'));
-	   app.company_code = {
-	    cCode: getCode.company_code,
-	    type: 3
-	   };
-	   app.axios.post('/api/user/userlist', app.company_code)
+	 
+	   var params = {  type: 2 };
+	   app.axios.get('/api/users', {params: params})
 	    .then(function(resp) {
 	     if (resp.data.status == true) {
-	      app.allClientsLists = resp.data.response;
+			 console.log(resp.data.response.users);
+	      app.allClientsLists = resp.data.response.users;
 	     }
 
 	    }).catch(function(resp) {});
@@ -206,15 +205,11 @@
 	  getAllLawyers: function() {
 
 	   var app = this;
-	   var getCode = JSON.parse(localStorage.getItem('user'));
-	   app.company_code = {
-	    cCode: getCode.company_code,
-	    type: 2
-	   };
-	   app.axios.post('/api/user/userlist', app.company_code)
+	 var params = {  type: 1  };
+	   app.axios.get('/api/users', {params: params})
 	    .then(function(resp) {
 	     if (resp.data.status == true) {
-	      app.allLawyersLists = resp.data.response;
+	      app.allLawyersLists = resp.data.response.users;
 	     }
 
 	    }).catch(function(resp) {});

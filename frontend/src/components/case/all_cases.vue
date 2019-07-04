@@ -1,15 +1,5 @@
 <template>
-<!--template v-if="notFound">
-<tr><td colspan="4" style="text-align:center">{{notFound}}</td></tr>
-</template>
-<template v-else>
-<tr v-for="cases, index in caseList">
-<td>{{cases.id}}</td>
-<td>{{cases.title}}</td>
-<td>{{cases.description}}</td>
-<td><router-link :to="{path:'/cases/edit',query:{id:cases.id}}">Edit</router-link> |
-<span style="cursor:pointer;" @click="deleteCase(cases.id , index)">Delete</span> |
-<span style="cursor:pointer;" @click="archiveCase(cases.id , index)">Archive</span-->
+
 <div class="container-fluid">
 	<div class="layer-client">
 		<div class="all-cases-view">
@@ -24,12 +14,8 @@
 							<div id="active-cases" class="tab-pane fade active show">
 								<div class="layer-name">
 									<div id="accordion" class="accordion">
-										<template v-if="notFound">
-											<b-alert show variant="warning" class="text-center">{{notFound}}</b-alert>
-										</template>
-										<template v-else>
-										<b-card no-body class="mb-1" v-for="user, index in caseList">
-											<template v-if="user.is_archived == 0">
+									<div v-if="caseList.cases.length > 0">
+										<b-card no-body class="mb-1" v-for="user, index in caseList.cases">
 											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
 												<p>{{user.title}}</p>
@@ -57,9 +43,11 @@
 													  </b-card-text>
 													</b-card-body>
 												  </b-collapse>
-												  </template>
 											</b-card>
-											</template>
+											</div>
+											<div v-else>
+											<b-alert show variant="warning" class="text-center">No record found!</b-alert>
+											</div>
 									</div>
 								</div>
 							</div>
@@ -72,23 +60,16 @@
 							<div id="active-cases" class="tab-pane fade active show">
 								<div class="layer-name">
 									<div id="accordion" class="accordion">
-									
-										<template v-if="notFound">
-											<b-alert show variant="warning" class="text-center">{{notFound}}</b-alert>
-										</template>
-										<template v-else>
-										<b-card no-body class="mb-1" v-for="user, index in caseList">
-											<template v-if="user.is_archived == 1">
+										<div v-if="caseList.archived.length > 0">
+										<b-card no-body class="mb-1" v-for="user, index in caseList.archived">
 											  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 												<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
 												<p>{{user.title}}</p>
 												</b-button>
 											  </b-card-header>
-						
 												<b-collapse :id="'accordion-'+ index" accordion="my-accordion" role="tabpanel">
 													<b-card-body class="background-change">
 													  <b-card-text>
-														
 														  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
 														  <h3>Hearing  Date &amp; Time</h3>
 														  <ul class="check-date-time">
@@ -103,9 +84,11 @@
 													  </b-card-text>
 													</b-card-body>
 												  </b-collapse>
-												  </template>
 											</b-card>
-											</template>
+											</div>
+											<div v-else>
+											<b-alert show variant="warning" class="text-center">No record found!</b-alert>
+											</div>
 									</div>
 								</div>
 							</div>
@@ -145,7 +128,7 @@ export default {
     did: e
    }
    if (confirm("Do you really want to delete?")) {
-    app.axios.post('/api/case/delete_case', app.deleteId)
+    app.axios.post('/api/cases/destroy', app.deleteId)
      .then(function(resp) {
       app.getAllLawyers();
       app.$notify({
@@ -174,7 +157,7 @@ export default {
     did: e
    }
    if (confirm("Do you really want to go?")) {
-    app.axios.post('/api/case/archive_case', app.deleteId)
+    app.axios.post('/api/cases/archive_case', app.deleteId)
      .then(function(resp) {
       app.getAllLawyers();
       app.$notify({
@@ -198,47 +181,13 @@ export default {
   	//getAllLawyers
   getAllLawyers(data) {
    var app = this;
-   app.axios.get('/api/case/caselist')
+   app.axios.get('/api/cases')
     .then(function(resp) {
-
-     if (resp.data.status == true) {
       app.caseList = resp.data.response;
-     } else {
-      app.notFound = resp.data.messages.join();
-     }
-
     }).catch(function(resp) {});
 
   },
-  //updateStatus
-  updateStatus: function(e) {
-   event.preventDefault();
-   var app = this;
-   var statusCode = {
-    status: e
-   }
-   if (confirm("Do you really want to update?")) {
-    app.axios.post('/api/user/update_status', statusCode)
-     .then(function(resp) {
 
-      app.getAllLawyers();
-      app.$notify({
-       text: resp.data.messages.join(),
-       type: resp.data.status ? 'success' : 'error',
-       duration: 1000,
-       speed: 3000
-      });
-
-     }).catch(function(resp) {
-      app.$notify({
-       text: resp.message,
-       type: 'error',
-       duration: 1000,
-       speed: 3000
-      });
-     });
-   }
-  }
 
  }
 }

@@ -95,7 +95,7 @@ export default {
    }
    var getCode = localStorage.getItem('jwt');
    app.user.user_token = getCode;
-   app.axios.post('api/user/update_password', app.user)
+   app.axios.post('/api/users/profile_update', app.user)
     .then(function(resp) {
      if (resp.data.status === true) {
       app.user = {

@@ -11,8 +11,6 @@ module.exports = {
 	  
 	  lawyer:{ model: 'users' },
 	  case:{ model: 'cases' },
-
-	 
   },
 
 };

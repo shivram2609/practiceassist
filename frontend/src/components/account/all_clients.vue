@@ -42,6 +42,7 @@
 							<b-alert show variant="warning" class="text-center">{{notFount}}</b-alert>
 						</template>
 						<template v-else>
+						
 							<b-card no-body class="mb-1" v-for="user, index in userList" v-bind:index="user.id">
 							  <b-card-header header-tag="header" class="p-1 card-header collapsed" role="tab">
 								<b-button block href="#" v-b-toggle="'accordion-' + index" variant="custom-info" class="card-title">
@@ -62,8 +63,8 @@
 									  <b-card-text>
 										<ul class="client-name-tittle">
 											<li><a href="#">Lawyer Name:<span> Kodwo</span></a></li>
-											<li><a href="#">Case Tilte:<span v-if="user.cases[0]"> {{user.cases[0].title}}</span></a></li>
-											<li><a href="#">Case Description:<span v-if="user.cases[0]"> {{user.cases[0].description}}</span></a></li>
+											<li><a href="#">Case Tilte:<span v-if="user.cases"> {{user.cases[0].title}}</span></a></li>
+											<li><a href="#">Case Description:<span v-if="user.cases"> {{user.cases[0].description}}</span></a></li>
 									   </ul>
 									   <ul class="client-activities">
 											<li><a href="#">All Activities</a></li>
@@ -123,7 +124,7 @@ export default {
     did: e
    }
    if (confirm("Do you really want to delete?")) {
-    app.axios.post('/api/user/delete_user', app.deleteId)
+    app.axios.post('/api/users/destroy', app.deleteId)
      .then(function(resp) {
       app.getAllLawyers();
       app.$notify({
@@ -146,18 +147,15 @@ export default {
   },
   getAllLawyers(data) {
    var app = this;
-   var getCode = JSON.parse(localStorage.getItem('user'));
-   app.company_code = {
-    cCode: getCode.company_code,
-    type: 3
-   };
-   app.axios.post('/api/user/clientlist', app.company_code)
+   var params = { type: 2 };
+   app.axios.get('/api/users', {params: params})
     .then(function(resp) {
-     if (resp.data.status == true) {
-      app.userList = resp.data.response;
-     } else {
-      app.notFount = resp.data.messages.join();
-     }
+   
+     	if (resp.data.response.users.length > 0) { 
+		  app.userList = resp.data.response.users;
+		 } else {
+		  app.notFount = 'No record found!';
+		 }
 
     }).catch(function(resp) {});
 
@@ -169,7 +167,7 @@ export default {
     status: e
    }
    if (confirm("Do you really want to update?")) {
-    app.axios.post('/api/user/update_status', statusCode)
+    app.axios.post('/api/user/update', statusCode)
      .then(function(resp) {
 
       app.getAllLawyers();
@@ -195,8 +193,7 @@ export default {
    var app = this;
    var userData = '';
    
-   var getCompany = JSON.parse(localStorage.getItem('user'));
-   app.user.company = getCompany.company.id;
+
     app.getClear = true;
    if(users) {
 	    userData = users;
@@ -207,9 +204,9 @@ export default {
    
    app.axios.post('/api/user/filter_record', userData)
      .then(function(resp) {
-		  if (resp.data.status == true) {
+		  if (resp.data.response.users.length > 0) {
 		  app.notFount = '';
-	      app.userList = resp.data.response;
+	      app.userList = resp.data.response.users;
 	     }else{
 		  app.notFount = resp.data.messages.join();
 		 }

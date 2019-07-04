@@ -67,8 +67,7 @@ export default {
     email: '',
     password: '',
     confirmPassword: '',
-    type: 2,
-    company: ''
+    type: 1
    },
    submitStatus: false
   }
@@ -102,7 +101,7 @@ export default {
   }
 
  },
-
+ 
  methods: {
   addLawyer: function(e) {
    event.preventDefault();
@@ -116,12 +115,8 @@ export default {
    }
 
    if (!app.$v.$invalid) {
-    var getCode = JSON.parse(localStorage.getItem('user'));
-    if (getCode) {
-     app.user.company = getCode.company.id;
-    }
-
-    app.axios.post('/api/user/register', app.user)
+    
+    app.axios.post('/api/users/register', app.user)
      .then(function(resp) {
 	  
       app.$notify({

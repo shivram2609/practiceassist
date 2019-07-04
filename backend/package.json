@@ -13,18 +13,20 @@
     "jsonwebtoken": "^8.5.1",
     "sails": "^1.2.2",
     "sails-hook-email": "^0.12.1",
-    "sails-hook-grunt": "^4.0.0",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
+    "sails-hook-grunt": "latest",
     "sails-mysql": "^1.0.1",
     "sails-seed": "^0.5.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "5.16.0"
+    "eslint": "5.16.0",
+    "grunt-sync": "0.8.1",
+    "sails-hook-grunt": "^4.0.1"
   },
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "standard 'api/**/*.js' --fix && NODE_ENV=production node app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"

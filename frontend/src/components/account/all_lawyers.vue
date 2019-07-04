@@ -64,8 +64,8 @@
 									  <b-card-text>
 										<ul class="client-name-tittle">
 											<li><a href="#">Lawyer Name:<span> {{user.name}}</span></a></li>
-											<li><a href="#">Case Tilte:<span v-if="user.case[0]"> {{user.case[0].title}}</span></a></li>
-											<li><a href="#">Case Description:<span v-if="user.case[0]"> {{user.case[0].description}}</span></a></li>
+											<li><a href="#">Case Tilte:<span v-if="user.case"> {{user.case.title}}</span></a></li>
+											<li><a href="#">Case Description:<span v-if="user.case"> {{user.case.description}}</span></a></li>
 									   </ul>
 									   <ul class="client-activities">
 											<li><a href="#">All Activities</a></li>
@@ -92,7 +92,7 @@ export default {
  data() {
   return {
    getClear: false,
-   company_code: {},
+   types: {},
    userList: {},
    deleteId: {},
    notFount: '',
@@ -123,7 +123,7 @@ export default {
     did: e
    }
    if (confirm("Do you really want to delete?")) {
-    app.axios.post('/api/user/delete_user', app.deleteId)
+    app.axios.post('/api/users/destroy', app.deleteId)
      .then(function(resp) {
       app.getAllLawyers();
       app.$notify({
@@ -146,18 +146,16 @@ export default {
   },
   getAllLawyers(data) {
    var app = this;
-   var getCode = JSON.parse(localStorage.getItem('user'));
-   app.company_code = {
-    cCode: getCode.company_code,
-    type: 2
-   };
-   app.axios.post('/api/user/userlist', app.company_code)
+   //var getCode = JSON.parse(localStorage.getItem('user'));
+   
+   var params = {  type: 1 };
+   app.axios.get('/api/users/', {params: params})
     .then(function(resp) {
-     if (resp.data.status == true) { 
+     if (resp.data.response.users.length > 0) { 
 	
-      app.userList = resp.data.response;
+      app.userList = resp.data.response.users;
      } else {
-      app.notFount = resp.data.messages.join();
+      app.notFount = 'No record found!';
      }
     }).catch(function(resp) {});
 
@@ -169,7 +167,7 @@ export default {
     status: e
    }
    if (confirm("Do you really want to update?")) {
-    app.axios.post('/api/user/update_status', statusCode)
+    app.axios.post('/api/users/update_status', statusCode)
      .then(function(resp) {
       app.getAllLawyers();
       app.$notify({
@@ -193,8 +191,6 @@ export default {
   onChangeValue: function(users) { 
    var app = this;
    var userData = '';
-   var getCompany = JSON.parse(localStorage.getItem('user'));
-   app.user.company = getCompany.company.id;
    if(users) {
 	    userData = users;
    }else {
@@ -202,7 +198,7 @@ export default {
    }
    app.$router.push({query : {search:app.user.search, select:  app.user.selected} });
    app.getClear = true;
-   app.axios.post('/api/user/filter_record', userData)
+   app.axios.post('/api/users/filter_record', userData)
      .then(function(resp) {
 		  if (resp.data.status == true) {
 		  app.notFount = '';

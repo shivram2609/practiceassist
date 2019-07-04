@@ -40,9 +40,9 @@
   
                           <b-navbar variant="faded" type="light">
 							<b-nav-item-dropdown right>  
-								<template slot="button-content"><img src="../../assets/img/admin.png" alt="Profile image" class="avatar-rounded">
-								   <span>{{userName}} </span></template>
-								 <b-dropdown-item to="#"><h5 class="text-overflow"><small>Hello, {{userName}} </small> </h5></b-dropdown-item>
+								<template slot="button-content"><img :src="'/images/profile_images/'+userName.image" alt="Profile image" class="avatar-rounded">
+								   <span>{{userName.name}} </span></template>
+								 <b-dropdown-item to="#"><h5 class="text-overflow"><small>Hello, {{userName.name}} </small> </h5></b-dropdown-item>
 								 <b-dropdown-item to="/settings/profile"> <i class="fa fa-user"></i> <span>Profile</span></b-dropdown-item>
 								 <b-dropdown-item to="#"> <i class="fa fa-power-off"></i> <span @click="logout" >Logout</span></b-dropdown-item>   
 							</b-nav-item-dropdown>
@@ -72,8 +72,7 @@ export default {
  },
  mounted() {
   var app = this;
-  var getUser = JSON.parse(localStorage.getItem('user'));
-  app.userName = getUser.name;
+  app.userName = JSON.parse(localStorage.getItem('user'));
   
   window.addEventListener('scroll', this.updateScroll);
  },

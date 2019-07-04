@@ -11,20 +11,20 @@ module.exports = function (req, res, next) {
         token = credentials;
       }
     } else {
-      return ResponseService.json({status: false, response: {}, messages: ['Authentication token not found.'] });
+      return res.json({status: false, response: {}, messages: ['Authentication token not found.'] });
     }
   } else if (req.param('token')) {
     token = req.param('token');
 
     delete req.query.token;
   } else {
-    return ResponseService.json({status: false, response: {}, messages: ['Authentication token not found.'] });
+    return res.json({status: false, response: {}, messages: ['Authentication token not found.'] });
   }
 
   JwtService.verify(token, function(err, decoded){
-    if (err) return ResponseService.json({status: false, response: {}, messages: ['Invalid token.'] });
+    if (err) return res.json({status: false, response: {}, messages: ['Invalid token.'] });
     req.token = token;
-    User.findOne({id: decoded.id}).then(function(user){
+    Users.findOne({id: decoded.id}).then(function(user){
       req.current_user = user;
       next();
     })

@@ -11,14 +11,13 @@ module.exports = {
   var user = {
    title: req.param('title'),
    description: req.param('description'),
-   client_id: req.param('client_id'),
-   case_time: req.param('case_time')
+   client: req.param('client'),
+   case_time: req.param('case_time'),
+   company : req.current_user.company
   }
 
-	
   var lawyersIDs = req.param('lawyer');
-
-
+  
   //create case
   Cases.create(user).fetch().then(function(cases) {
 	var caseLayers=[];
@@ -42,25 +41,26 @@ module.exports = {
  },
  
  //get case listing
- get_cases: async function(req, res) {
-  var casesList =
-  await Cases.find({});
+ index: async function(req, res) {
+  var casesList = await Cases.find({is_archived: 0});
+  var casesArchived = await Cases.find({is_archived: 1});
+  
   if (casesList.length > 0) {
   return res.json({
    status: true,
-   response: casesList,
+   response: {cases: casesList , archived:casesArchived},
    messages: []
   });
  } else {
   return res.json({
    status: false,
-   response: {},
+   response: {cases: [] , archived:[]},
    messages: ['No records found.']
   });
  }
  },
  //delete case 
- delete_case: async function(req, res) {
+ destroy: async function(req, res) {
   var did = req.param('did');
   await Cases.destroyOne({
    id: did
@@ -72,11 +72,11 @@ module.exports = {
   });
  },
  //get edit_user
- edit_case: async function(req, res) {
+ show: async function(req, res) {
   var getId = req.param('uid');
   var UsersList = await Cases.findOne({
    id: getId
-  }).populate('lawyer');
+  }).populate('lawyers');
   return res.json({
    status: true,
    response: UsersList,
@@ -86,13 +86,13 @@ module.exports = {
  },
 
  //update case 
- update_case: function(req, res) {
+ update: function(req, res) {
 
   var uid = req.param('id');
 
   var getAll = {
-   client_id: req.param('client_id'),
-   company_id: req.param('company_id'),
+   client: req.param('client'),
+   company: req.param('company'),
    title: req.param('title'),
    description: req.param('description'),
    price: req.param('price'),
@@ -112,7 +112,7 @@ module.exports = {
   }).set(getAll).then(function() {
 	  
 	 //update caselawyers with new data
-	  var lawyersIDs = req.param('lawyer');
+	  var lawyersIDs = req.param('lawyers');
 	  	var caseLayers=[];
 	lawyersIDs.forEach(function(lawyer) {
 		caseLayers.push({ lawyer : lawyer, case : uid });

@@ -25,13 +25,10 @@ module.exports = {
 	price: { type: 'number', columnType: 'float', allowNull: true},
 	package_id: { type: 'number', columnType: 'integer', required: false},
 	company: { model: 'companies' },
-	cases: { collection: 'Cases', via: 'client_id' },
-	case: { collection: 'Cases', via:'lawyer' , through: 'caselawyers' }
-	
-	
-    
+	client_cases: { collection: 'Cases', via: 'client' },
+	lawyer_cases: { collection: 'Cases', via:'lawyer' , through: 'caselawyers' }
   },
-
+  userType: {'FIRM': 0,'LAWYER': 1,'CLIENT':2},
   beforeCreate: function(values, cb){
 	  bcrypt.hash(values.password, 10, function (err, hash) {
       if (err) return cb(err);
