@@ -25,7 +25,8 @@
 						<button class="btn btn-primary" type="submit">Submit</button>
 					</div>
 					<div class="no-account">
-						<h4><router-link to="login"><span>Login</span></router-link></h4>
+						
+						<h4>Back to <router-link to="login"><span>Login</span></router-link></h4>
 					</div>
 					
 				</form>

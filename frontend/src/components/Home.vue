@@ -33,6 +33,7 @@
                 </div>
             </div>
             <div class="col-md-12">
+			
                 	<carousel :per-page="4">
 					<slide><img src="../assets/img/brand-logo.png"></slide>
 					<slide><img src="../assets/img/brand-logo1.png"></slide>
@@ -42,6 +43,7 @@
 					<slide><img src="../assets/img/brand-logo1.png"></slide>
 				  </carousel>
                 </div>
+                 
         </div>
     </div>
 </section>
@@ -131,3 +133,25 @@
     </div>
 </section>
 </div>
+</template>
+<script>
+
+</script>
+<style>
+	.VueCarousel {
+    margin-top: 40px;
+}
+button.VueCarousel-dot.VueCarousel-dot--active {
+    width: 4px !important;
+    height: 4px !important;
+    margin: 5px 7px;
+    background: #0b5f93 !important;
+   
+}
+button.VueCarousel-dot {
+    background: #fff !important;
+    border: 1px solid #000 !important;
+    width: 4px !important;
+    height: 4px !important;
+}
+</style>

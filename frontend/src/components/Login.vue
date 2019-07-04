@@ -25,15 +25,15 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<button class="btn btn-primary" type="submit">Login</button>
+										<button class="btn btn-primary" type="submit">Submit</button>
 									</div>
-									  <!--div class="social-link">
+									  <div class="social-link">
 										<h4>Or Login Using</h4>
 										<ul>
 												<li><a href="#"><a href="#" class="icon-button facebook"><i class="fab fa-google"></i><span></span></a></a></li>
 											<li><a href="#" class="icon-button twitter"><i class="fab fa-linkedin-in"></i><span></span></a></li>
 										</ul>
-									</div-->
+									</div>
 									<div class="no-account">
 										<h4>Dont’t have an account? <router-link to="register"><span>Sign Up</span></router-link></h4>
 										<router-link to="/forgot_password">Forgot Password?</router-link>

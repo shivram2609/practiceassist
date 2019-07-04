@@ -4,6 +4,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="register-firm">
+				
 							<form  class="register-from needs-validation" novalidate @submit="registerForm">
 							<div v-if="step === 1">
 								<section class="">
@@ -40,6 +41,7 @@
 							
 							</div>
 						<div v-if="step === 2">
+									<h3>Register</h3>
 						<div class="layer-firms-changes">
 							
 							<div class="radio-btn">
@@ -115,16 +117,16 @@
 										<div>Package Type: <strong>{{packName}}</strong> <a href="javascript:void(0)" @click.prevent="prev()">Change</a></div>
 									</div>
 									<div class="form-group col-md-6">
-										<button class="btn btn-primary" type="submit">Register</button>
+										<button class="btn btn-primary" type="submit">Submit</button>
 										
 									</div>
-									<!--div class="social-link col-md-12">
+									<div class="social-link col-md-12">
                                         <h4>Or Login Using</h4>
                                         <ul>
                                                 <li><a href="#"><a href="#" class="icon-button facebook"><i class="fab fa-google"></i><span></span></a></a></li>
                                             <li><a href="#" class="icon-button twitter"><i class="fab fa-linkedin-in"></i><span></span></a></li>
                                         </ul>
-                                    </div-->
+                                    </div>
 									<div class="no-account col-md-12">
 										<h4>Already have an account? <router-link to="login"><span>Login</span></router-link></h4>
 									</div>
