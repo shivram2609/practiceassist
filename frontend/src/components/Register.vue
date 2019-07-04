@@ -260,6 +260,7 @@ export default {
        duration: 1000,
        speed: 3000
       });
+      app.$router.push('/login');
 
      }).catch(function(resp) {
       app.$notify({
