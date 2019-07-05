@@ -7,14 +7,14 @@
 const uuidv1 = require('uuid/v1');
 module.exports = {
  /*
-  * function: create
+  * function: register
   * method: POST
   * url: /users
   * desc: create user with form value
   * params: name , email , password
   * author: Ramnish
   */
- create:  function(req, res) {
+ register:  function(req, res) {
 	 var userType = req.param('type');
 	
 		if(userType == 0) {
@@ -76,7 +76,7 @@ module.exports = {
 		  }
  },
  
-	register: function(req, res) {
+	create: function(req, res) {
 			
 			var user = {
 			name: req.param('name'),
@@ -283,11 +283,7 @@ module.exports = {
       id: user.id
      })
     }
-    return res.json({
-     status: true,
-     response: responseData,
-     messages: ["Logging successfully."]
-    });
+    rget_packages
    });
   }).catch(function(err) {
    return res.json({

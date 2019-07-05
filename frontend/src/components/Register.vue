@@ -253,7 +253,7 @@ export default {
    }
    
    if (!app.$v.$invalid) {
-    app.axios.post('/api/users/create', app.user)
+    app.axios.post('/api/users/register', app.user)
      .then(function(resp) {
 	  //app.user = {name: '' , email:'', password:'',sameAsPassword:''}
 	  if(resp.data.status == true) {

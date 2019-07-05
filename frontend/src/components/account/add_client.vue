@@ -117,7 +117,7 @@ export default {
 
    if (!app.$v.$invalid) {
 
-    app.axios.post('/api/users/register', app.user)
+    app.axios.post('/api/users/create', app.user)
      .then(function(resp) {
 
       app.$notify({
