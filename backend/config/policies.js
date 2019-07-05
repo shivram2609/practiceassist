@@ -19,7 +19,7 @@ module.exports.policies = {
     '*': ['isAuthorized'],
   // Only those action and controllers which needs access without authorization 
   'UsersController': {
-    'create': true,
+    'register': true,
     'login': true,
     'forgot_password': true,
     'change_password': true,
