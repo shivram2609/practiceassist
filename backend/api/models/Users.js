@@ -25,7 +25,7 @@ module.exports = {
 	price: { type: 'number', columnType: 'float', allowNull: true},
 	package_id: { type: 'number', columnType: 'integer', required: false},
 	device_token: { type: 'string', allowNull: true},
-	device_type: { type: 'number', columnType: 'integer', required: false},
+	device_type: { type: 'number', columnType: 'integer', allowNull: true},
 	company: { model: 'companies' },
 	client_cases: { collection: 'Cases', via: 'client' },
 	lawyer_cases: { collection: 'Cases', via:'lawyer' , through: 'caselawyers' }

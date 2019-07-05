@@ -267,7 +267,6 @@ module.exports = {
   }).populate('company').then(function(user) {
    return Users.comparePassword(password, user).then(function(valid) {
     if (!valid) throw new Error('Invalid Password');
-
     if (user.is_email_confirmed === false) {
      return res.json({
       status: false,
@@ -275,15 +274,16 @@ module.exports = {
       messages: ["Your email is not verified yet."]
      });
     }
-
-
     var responseData = {
      user: {name: user.name,image: user.image, email: user.email},
      token: JwtService.issue({
       id: user.id
      })
     }
-    rget_packages
+	
+	return res.json({ status: true,	 response: responseData, messages: ['login successfully.']});
+
+   
    });
   }).catch(function(err) {
    return res.json({

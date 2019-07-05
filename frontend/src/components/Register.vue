@@ -2,9 +2,10 @@
 	<section class="login-sec">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12">
-					<div class="register-firm">
 				
+				<div :class="classType">
+			
+					<div class="register-firm">
 							<form  class="register-from needs-validation" novalidate @submit="registerForm">
 							<div v-if="step === 1">
 								<section class="">
@@ -57,7 +58,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="login-form">
+						<div class="register-form">
 							
 								
 								<div class="row">
@@ -68,7 +69,7 @@
 											<input required v-model.trim="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error || submitStatus == true}" class="form-control"  id="userName" placeholder="Firm Name">
 										</template>
 										<template v-else>
-											<input required v-model.trim="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error || submitStatus == true}" class="form-control"  id="userName" placeholder="User Name">
+											<input required v-model.trim="$v.user.name.$model" :class="{'is-invalid': $v.user.name.$error || submitStatus == true}" class="form-control"  id="userName" placeholder="First Name">
 										</template>
 										
 										<template v-if="user.type == 0">
@@ -105,7 +106,7 @@
 									
 									<div class="form-group col-md-6">
 										<label for="userConfirmPassword">Confirm password</label>
-										<input type="password" :class="{'is-invalid': $v.user.confirmPassword.$error || submitStatus == true}" class="form-control" required id="userConfirmPassword" v-model.trim="$v.user.confirmPassword.$model" placeholder="Confirm password ">
+										<input type="password" :class="{'is-invalid': $v.user.confirmPassword.$error || submitStatus == true}" class="form-control" required id="userConfirmPassword" v-model.trim="$v.user.confirmPassword.$model" placeholder="Confirm Password">
 										
 										<div class="invalid-feedback text-left" v-if="!$v.user.confirmPassword.required">Please enter confirm password.</div>
 										<div class="invalid-feedback text-left" v-if="!$v.user.confirmPassword.minLength">Password must have at least {{ $v.user.confirmPassword.$params.minLength.min }} characters.</div>
@@ -114,7 +115,7 @@
 									</div>
 								
 									<div class="form-group col-md-3">
-										<div>Package Type: <strong>{{packName}}</strong> <a href="javascript:void(0)" @click.prevent="prev()">Change</a></div>
+										<div>Package: <strong>{{packName}}</strong> <a href="javascript:void(0)" @click.prevent="prev()">Change</a></div>
 									</div>
 									<div class="form-group col-md-6">
 										<button class="btn btn-primary" type="submit">Submit</button>
@@ -123,8 +124,8 @@
 									<div class="social-link col-md-12">
                                         <h4>Or Login Using</h4>
                                         <ul>
-                                                <li><a href="#"><a href="#" class="icon-button facebook"><i class="fab fa-google"></i><span></span></a></a></li>
-                                            <li><a href="#" class="icon-button twitter"><i class="fab fa-linkedin-in"></i><span></span></a></li>
+                                                <li><a href="#"><a href="#" class="icon-button facebook"><i class="fa fa-google"></i><span></span></a></a></li>
+                                            <li><a href="#" class="icon-button twitter"><i class="fa fa-linkedin"></i><span></span></a></li>
                                         </ul>
                                     </div>
 									<div class="no-account col-md-12">
@@ -137,6 +138,8 @@
 						</form>
 					</div>
 				</div>
+				
+				
 			</div>
 		</div>
 
@@ -157,6 +160,7 @@ import {
 export default {
  data() {
   return {
+	 classType: 'col-md-12',
 	step:1,
    user: {
     name: '',
@@ -201,21 +205,7 @@ export default {
   }
 
  },
- computed() {
- console.log('computed this here');
- },
- watch: {
-	step(newValue, oldValue) {
-      console.log('Updating from ${oldValue} to ${newValue}');
 
-      // Do whatever makes sense now
-      if (newValue === '1') {
-        this.complex = {
-          deep: 'some deep object',
-        };
-      }
-  }
- },
  mounted() {
   var app = this;
   app.getPackagesList();
@@ -232,10 +222,12 @@ export default {
   },
   prev() {
    var app = this;
+   app.classType = 'col-md-12';
    app.step--;
   },
   next(id, pname, price) {
     var app = this;
+    app.classType = 'col-md-10 offset-md-1';
     app.user.package_id = id;
     app.user.price = price;
     app.packName = pname;

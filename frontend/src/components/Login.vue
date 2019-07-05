@@ -30,8 +30,8 @@
 									  <div class="social-link">
 										<h4>Or Login Using</h4>
 										<ul>
-												<li><a href="#"><a href="#" class="icon-button facebook"><i class="fab fa-google"></i><span></span></a></a></li>
-											<li><a href="#" class="icon-button twitter"><i class="fab fa-linkedin-in"></i><span></span></a></li>
+												<li><a href="#"><a href="#" class="icon-button facebook"><i class="fa fa-google" aria-hidden="true"></i><span></span></a></a></li>
+											<li><a href="#" class="icon-button twitter"><i class="fa fa-linkedin" aria-hidden="true"></i><span></span></a></li>
 										</ul>
 									</div>
 									<div class="no-account">
@@ -95,7 +95,7 @@ export default {
     app.submitStatus = true
     return;
    }
-   app.axios.post('api/users/login', app.user)
+   app.axios.post('/api/users/login', app.user)
     .then(function(resp) {
 	
      app.$notify({
@@ -114,14 +114,12 @@ export default {
        if (app.$route.params.nextUrl != null) {
         app.$router.push(this.$route.params.nextUrl)
        } else {
-        app.$router.push('account');
+        app.$router.push('/account');
        // app.$router.go()
        }
       }
      }
-     // app.$router.push("/account");
     }).catch(function(resp) {
-     // app.$notify({text: resp.message,type:'error',duration:1000,speed:2000});
      app.$notify({
       text: resp.data.messages.join(),
       type: 'error',
